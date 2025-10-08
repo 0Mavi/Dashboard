@@ -15,14 +15,9 @@ export default function Header() {
     }
 
     return (
-        <div className="flex w-full h-auto shrink-0 justify-between items-center bg-sidebar gap-2 transition-[width,height] ease-linear border-b border-sidebar-border px-5 py-2">
+        <div className="flex w-full h-auto shrink-0 justify-between items-center bg-background gap-2 transition-[width,height] ease-linear border-b border-sidebar-border px-5 py-2">
             <div className="flex items-center gap-2">
-                <Image
-                    src="/assests/header.jpg"
-                    width={140}
-                    height={140}
-                    alt="Picture of the author"
-                />
+                <h1 className="text-subtitle font-bold "> Agenda </h1>
             </div>
             <div className="flex items-center gap-x-5">
                 <ThemeToggle />

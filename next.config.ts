@@ -13,10 +13,3 @@
 
 // export default nextConfig;
 
-
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  transpilePackages: ['@appletosolutions/reactbits'],
-};
-
-module.exports = nextConfig;
