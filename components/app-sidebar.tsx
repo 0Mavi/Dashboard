@@ -104,9 +104,9 @@ export default function AppSidebar({
             <SidebarHeader>
                 <div className="flex items-center justify-center h-12 mt-4">
                     <Image
-                        src="/logo.png"
+                        src="/assests/logo.png"
                         alt="Logo"
-                        width={open ? 150 : 40}
+                        width={open ? 120 : 40}
                         height={40}
                         className="object-contain"
                     />
@@ -118,7 +118,7 @@ export default function AppSidebar({
                 <NavMain items={navData} />
              
 
-                <span className={cn(!open && "hidden") || "text-black p-2" }>Sistema</span>
+                <span className={cn(!open && "hidden") || " p-2" }>Sistema</span>
 
                 <NavMain items={systemNav} />
 
