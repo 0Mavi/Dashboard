@@ -1,7 +1,6 @@
 "use client";
 
 import type { LucideIcon } from "lucide-react";
-
 import {
     SidebarGroup,
     SidebarMenu,
@@ -63,14 +62,31 @@ export function NavMain({
                                         tooltip={item.title}
                                         onClick={() => handleItemClick(item.url)}
                                         isActive={activeItem === item.url}
-                                        className="hover:bg-foreground hover:text-white"
                                         asChild
+                                        className={`
+                                            transition-colors duration-200 
+                                            rounded-[5px] px-2 py-1.5 w-full flex items-center gap-2 
+                                            ${
+                                                activeItem === item.url
+                                                    ? "bg-sidebar-primary text-sidebar-primary-foreground"
+                                                    : "text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground "
+                                            }
+                                        `}
                                     >
                                         <a href={item.url}>
                                             {item.icon && (
-                                                <item.icon className={activeItem === item.url ? "text-white" : "text-foreground group-hover/collapsible:text-white"} />
+                                                <item.icon
+                                                    className={`
+                                                        w-5 h-5 transition-colors duration-200
+                                                        ${
+                                                            activeItem === item.url
+                                                                ? "text-sidebar-primary-foreground"
+                                                                : "text-sidebar-foreground group-hover/collapsible:text-sidebar-accent-foreground"
+                                                        }
+                                                    `}
+                                                />
                                             )}
-                                            <span>{item.title}</span>
+                                            <span className="truncate">{item.title}</span>
                                         </a>
                                     </SidebarMenuButton>
                                 </CollapsibleContent>

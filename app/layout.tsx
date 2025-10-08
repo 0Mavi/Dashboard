@@ -1,13 +1,14 @@
 "use client";
 
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+
 import AppLayout from "@/components/appLayout";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { UserProvider } from "@/context/userContext";
 import { usePathname } from "next/navigation";
 
+import "./globals.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,6 +32,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
+          value={{
+            light: "light",
+            dark: "dark",
+            purple: "purple",
+            green: "green",
+          }}
           enableSystem
           disableTransitionOnChange
         >

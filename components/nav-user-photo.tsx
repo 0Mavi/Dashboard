@@ -89,9 +89,10 @@ export function NavUserPhoto() {
                             variant="void"
                             className="flex items-center gap-2 w-full p-2 h-auto justify-between"
                         >
-                            <span className="text-[16px] font-semibold text-foreground leading-tight truncate">
+                            <span className="text-[16px] font-semibold text-sidebar-foreground leading-tight truncate">
                                 {user?.name || "Usuário"}
                             </span>
+
                             <Avatar className="h-12 w-12 ml-auto">
                                 <Image
                                     src={user?.imagemPerfil || "/assests/foto.jpg"}

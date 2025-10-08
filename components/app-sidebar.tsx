@@ -118,7 +118,7 @@ export default function AppSidebar({
                 <NavMain items={navData} />
              
 
-                <span className={cn(!open && "hidden") || "text-black p-2" }>Sistema</span>
+                <span className={cn(!open && "hidden") || "text-sm text-muted-foreground p-2" }>Sistema</span>
 
                 <NavMain items={systemNav} />
 
