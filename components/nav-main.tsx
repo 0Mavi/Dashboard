@@ -56,8 +56,7 @@ export function NavMain({
                         className="group/collapsible"
                     >
                         <SidebarMenuItem key={item.title}>
-                            <CollapsibleTrigger asChild>
-                                <CollapsibleContent>
+                           
                                     <SidebarMenuButton
                                         tooltip={item.title}
                                         onClick={() => handleItemClick(item.url)}
@@ -80,7 +79,7 @@ export function NavMain({
                                                         w-5 h-5 transition-colors duration-200
                                                         ${
                                                             activeItem === item.url
-                                                                ? "text-sidebar-primary-foreground"
+                                                                ? "text-sidebar-primary"
                                                                 : "text-sidebar-foreground group-hover/collapsible:text-sidebar-accent-foreground"
                                                         }
                                                     `}
@@ -89,8 +88,7 @@ export function NavMain({
                                             <span className="truncate">{item.title}</span>
                                         </a>
                                     </SidebarMenuButton>
-                                </CollapsibleContent>
-                            </CollapsibleTrigger>
+                               
                         </SidebarMenuItem>
                     </Collapsible>
                 ))}

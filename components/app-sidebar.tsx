@@ -57,8 +57,8 @@ const navData = [
         isActive: false,
     },
     {
-        title: "Joguinhos",
-        url: "/clients",
+        title: "Artigos",
+        url: "/Artigos",
         icon: Users,
         isActive: false,
     },
