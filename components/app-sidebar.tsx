@@ -46,7 +46,7 @@ const navData = [
     },
      {
         title: "Chat",
-        url: "/stock",
+        url: "/Chat",
         icon: Box,
         isActive: false,
     },

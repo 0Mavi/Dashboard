@@ -24,10 +24,10 @@ const buttonVariants = cva(
           "bg-secondary text-white hover:border-primary border-2 hover:border-secondary hover:text-secondary hover:bg-transparent",
         link: "text-primary underline-offset-4 hover:underline",
         gradient: "w-full bg-gradient-to-r from-primary to-foreground text-white hover:opacity-90 ",
-        icon:"w-full bg-foreground flex items-center justify-center gap-2 hover:bg-transparent hover:text-primary border-2 border-foreground text-white text-xs ",
+        icon:"w-full bg-foreground flex items-center justify-center gap-2 hover:bg-transparent hover:text-primary border-2 border-foreground text-secondary text-xs ",
         void: "flex w-full text-white items-center  gap-x-1  hover:text-primary",
         opaque: "text-white items-center  gap-x-1  hover:text-primary",
-        defaultV:"bg-primary text-white shadow items-center border-2 border-primary gap-x-1 hover:bg-transparent hover:text-primary"
+        defaultV:"bg-primary text-muted shadow items-center border-2 border-primary gap-x-1 hover:bg-transparent hover:text-primary"
       },
       size: {
         default: "h-9 px-4 py-2 rounded-xl",

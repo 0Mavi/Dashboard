@@ -13,7 +13,7 @@ body {
  :root {
   /* ====================== THEME: LIGHT (CLÁSSICO) ====================== */
   --background: 0 0% 100%;
-  --foreground: 240 10% 3.9%;
+  --foreground: 240 10% 3.9%; /* #0A0A0A */
 
   --card: 0 0% 100%;
   --card-foreground: 240 10% 3.9%;
@@ -40,21 +40,20 @@ body {
   --input: 240 5.9% 90%;
   --ring: 240 5.9% 10%;
 
-  /* Sidebar usando as cores do light theme */
-  --sidebar-background: var(--background);
-  --sidebar-foreground: var(--foreground);
-  --sidebar-primary: var(--primary);
-  --sidebar-primary-foreground: var(--primary-foreground);
-  --sidebar-accent: var(--accent);
-  --sidebar-accent-foreground: var(--accent-foreground);
-  --sidebar-border: var(--border);
-  --sidebar-ring: var(--ring);
+  --sidebar-background: 0 0% 100%;
+  --sidebar-foreground: 240 10% 3.9%;
+  --sidebar-primary: 240 5.9% 10%;
+  --sidebar-primary-foreground: 0 0% 98%;
+  --sidebar-accent: 240 4.8% 95.9%;
+  --sidebar-accent-foreground: 240 5.9% 10%;
+  --sidebar-border: 240 5.9% 90%;
+  --sidebar-ring: 240 5.9% 10%;
 }
 
 .dark {
   /* ====================== THEME: DARK (CLÁSSICO) ====================== */
   --background: 240 10% 3.9%;
-  --foreground: 0 0% 98%;
+  --foreground: 0 0% 98%; /* #FAFAFA */
 
   --card: 240 10% 3.9%;
   --card-foreground: 0 0% 98%;
@@ -81,94 +80,95 @@ body {
   --input: 240 3.7% 15.9%;
   --ring: 0 0% 98%;
 
-  /* Sidebar usando as cores do dark theme */
-  --sidebar-background: var(--background);
-  --sidebar-foreground: var(--foreground);
-  --sidebar-primary: var(--primary);
-  --sidebar-primary-foreground: var(--primary-foreground);
-  --sidebar-accent: var(--accent);
-  --sidebar-accent-foreground: var(--accent-foreground);
-  --sidebar-border: var(--border);
-  --sidebar-ring: var(--ring);
+  --sidebar-background: 240 10% 3.9%;
+  --sidebar-foreground: 0 0% 98%;
+  --sidebar-primary: 0 0% 98%;
+  --sidebar-primary-foreground: 240 10% 3.9%;
+  --sidebar-accent: 240 3.7% 15.9%;
+  --sidebar-accent-foreground: 0 0% 98%;
+  --sidebar-border: 240 3.7% 15.9%;
+  --sidebar-ring: 0 0% 98%;
 }
+/* ====================== THEME: PURPLE (ROXO) ====================== */
 
 .purple {
-  /* Paleta inspirada na arte @caramelloart */
-  --background: 240 70% 96%; /* #C8DEF8 - fundo claro azulado */
-  --foreground: 245 40% 12%; /* #1C1D6F - texto roxo escuro */
+  --background: 292 84% 90%; /* Cor: #F9D0FB (Lilás Quase Branco) - Fundo principal */
+  --foreground: 280 40% 16%; /* Cor: #2C163B (Roxo Profundo) - Texto principal */
 
-  --card: 240 60% 98%;
-  --card-foreground: var(--foreground);
+  --card: 292 84% 92%; /* Levemente mais claro que o fundo */
+  --card-foreground: 280 40% 16%; /* Cor fixa: #2C163B */
 
-  --popover: 240 60% 98%;
-  --popover-foreground: var(--foreground);
+  --popover: 292 84% 92%;
+  --popover-foreground: 280 40% 16%; /* Cor fixa: #2C163B */
 
-  --primary: 245 65% 60%; /* #5F84DB - azul lilás vibrante */
-  --primary-foreground: 0 0% 98%; /* branco para contraste */
+  --primary: 265 37% 53%; /* Cor: #7F5DB3 (Roxo Médio) - Destaque principal */
+  --primary-foreground: 0 0% 98%;
 
-  --secondary: 280 45% 75%; /* #B48CF2 - lilás suave */
-  --secondary-foreground: 245 40% 15%;
+  --secondary: 279 38% 57%; /* Cor: #A267BF (Lilás Suave) */
+  --secondary-foreground: 280 40% 16%; /* Cor fixa: #2C163B */
 
-  --muted: 240 30% 85%; /* azul lavanda suave */
-  --muted-foreground: 245 25% 35%;
+  --muted: 270 45% 75%; /* Cor: #D8A0F0 (Lilás Lavanda Muted) */
+  --muted-foreground: 250 20% 30%; /* Roxo mais apagado para subtexto */
 
-  --accent: 265 50% 50%; /* #7C44BC - roxo intenso */
+  --accent: 257 49% 44%; /* Cor: #543CA4 (Roxo Intenso) - Destaque Intenso/Eletrico */
   --accent-foreground: 0 0% 98%;
 
-  --border: 245 30% 75%; /* bordas em tom lavanda */
-  --input: 245 30% 75%;
-  --ring: 245 65% 60%; /* tom azulado vivo */
+  --destructive: 0 70% 50%; /* Mantendo vermelho forte para alerta */
+  --destructive-foreground: 0 0% 98%;
 
-  /* Sidebar inspirada no contraste da imagem */
-  --sidebar-background: 245 50% 10%; /* #1C1D6F - roxo azulado profundo */
-  --sidebar-foreground: 240 60% 92%; /* texto claro */
-  --sidebar-primary: 245 65% 60%; /* #5F84DB */
+  --border: 279 25% 70%; /* Lilás Lavanda para bordas */
+  --input: 292 84% 90%; /* #F9D0FB */
+  --ring: 257 49% 44%; /* Cor: #543CA4 (Roxo Intenso) - Focus Ring */
+
+  /* Sidebar: CORES FIXAS */
+  --sidebar-background: 280 40% 16%; /* Cor: #2C163B (Roxo Profundo) - Fundo Sidebar */
+  --sidebar-foreground: 292 84% 90%; /* Cor: #F9D0FB (Lilás Quase Branco) - Texto Sidebar */
+  --sidebar-primary: 265 37% 53%; /* Cor: #7F5DB3 (Roxo Médio) - Item ativo */
   --sidebar-primary-foreground: 0 0% 98%;
-  --sidebar-accent: 190 45% 60%; /* #64B4C4 - azul ciano */
+  --sidebar-accent: 257 49% 44%; /* Cor: #543CA4 */
   --sidebar-accent-foreground: 0 0% 98%;
-  --sidebar-border: 245 40% 20%;
-  --sidebar-ring: 245 65% 60%;
+  --sidebar-border: 307 33% 29%; /* Cor: #613367 (Roxo Escuro Profundo) - Divisores */
+  --sidebar-ring: 257 49% 44%;
 }
 
 
 
 /* ====================== THEME: GREEN (VERDE) ====================== */
 .green {
-  /* Base: #034C36 (Verde Escuro) | Primary: #FF812B (Laranja/Pêssego) */
-  --background: 168 83% 95%; /* Cor base mais clara para o fundo */
-  --foreground: 168 83% 10%; /* Verde escuro para texto */
+   --background: 147 67% 94%;
+  --foreground: 180 20% 21%;
 
-  --card: 168 83% 98%;
-  --card-foreground: var(--foreground);
+  --card: 147 67% 96%;
+  --card-foreground: 180 20% 21%; 
 
-  --popover: 168 83% 98%;
-  --popover-foreground: var(--foreground);
+  --popover: 147 67% 96%;
+  --popover-foreground: 180 20% 21%; 
 
-  --primary: 24 100% 58%; /* #FF812B (Laranja/Coral para acento) */
+  --primary: 172 45% 41%;
   --primary-foreground: 0 0% 98%;
 
-  --secondary: 168 30% 70%;
-  --secondary-foreground: 168 83% 15%;
+  --secondary: 177 50% 65%;
+  --secondary-foreground: 180 20% 21%; 
 
-  --muted: 168 30% 80%;
-  --muted-foreground: 168 20% 40%;
+  --muted: 177 17% 73%;
+  --muted-foreground: 180 20% 21%; 
 
-  --accent: 168 83% 30%; /* Verde escuro para destaque */
+  --accent: 172 45% 41%;
   --accent-foreground: 0 0% 98%;
 
-  --border: 168 83% 80%;
-  --input: 168 83% 80%;
-  --ring: 24 100% 58%;
+  --border: 177 22% 60%;
+  --input: 147 67% 90%;
+  --ring: 172 45% 41%;
 
-  /* Sidebar customizada com a cor escura do tema green */
-  --sidebar-background: 168 83% 10%; /* #034C36 (Fundo escuro da imagem) */
-  --sidebar-foreground: 168 83% 90%;
-  --sidebar-primary: 24 100% 58%; /* #FF812B */
-  --sidebar-primary-foreground: 0 0% 98%;
-  --sidebar-accent: 168 83% 30%;
+  
+  --sidebar-background: 180 20% 21%;
+  --sidebar-foreground: 147 67% 94%;
+  --sidebar-primary: 167 52% 70%;
+  --sidebar-primary-foreground: 180 20% 21%;
+  --sidebar-accent: 172 45% 41%;
   --sidebar-accent-foreground: 0 0% 98%;
-  --sidebar-border: 168 83% 20%;
-  --sidebar-ring: 24 100% 58%;
+  --sidebar-border: 177 50% 17%;
+  --sidebar-ring: 172 45% 41%;
 }
 }
 

@@ -41,17 +41,17 @@ export function ThemeSelector() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button 
-          variant="outline" 
+          variant="defaultV" 
           size="icon"  
           className="justify-center"
         >
-          <Palette className="h-4 w-4" />
+          <Palette className="h-6 w-6" />
         </Button>
       </DropdownMenuTrigger>
 
       <DropdownMenuContent 
-       className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg bg-background text-foreground shadow-md border-secondary border-2"
-      align="end">
+       className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-[8px] bg-background text-foreground shadow-md border-secondary border-2"
+        align="end">
         <DropdownMenuLabel>Paletas de Cores</DropdownMenuLabel>
         <DropdownMenuSeparator />
         {THEMES.map((t) => (
