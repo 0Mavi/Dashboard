@@ -4,7 +4,7 @@
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Mic, ChevronRight, Wrench } from 'lucide-react';
-import { CreatePlanModal } from './CreatePlanModal'; // Importar o novo componente modal
+import { CreatePlanModal } from './CreatePlanModal'; 
 
 interface InputAreaProps {
   placeholderText: string;
@@ -12,17 +12,16 @@ interface InputAreaProps {
 
 export function InputArea({ placeholderText }: InputAreaProps) {
   return (
-    // ... [Mantém o div pai com estilos]
+
     <div className="relative flex items-center bg-background border border-muted rounded-full py-3 px-6 shadow-lg transition duration-300 hover:shadow-xl w-full"> 
           
       <div className="flex items-center space-x-1 mr-4"> 
-        {/* Substituição do botão Plus pelo componente que inclui o modal */}
+  
         <CreatePlanModal /> 
       </div>
       
       <Input
         type="text"
-        // ... [Mantém os estilos do Input]
         placeholder={placeholderText}
         className="flex-1 border-none text-base bg-transparent px-0 py-0 placeholder:text-primary/50"
       />

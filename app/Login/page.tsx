@@ -1,86 +1,108 @@
-import Image from "next/image";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+"use client";
+
+import { motion } from "framer-motion";
 import { FcGoogle } from "react-icons/fc";
-import { FaFacebookF } from "react-icons/fa";
+import { useState } from "react";
+import Image from "next/image";
+import { signIn } from "next-auth/react";
 
 
 export default function LoginPage() {
+  const [loading, setLoading] = useState(false);
 
-  
+  const handleGoogleSignIn = () => {
+    setLoading(true);
+    signIn("google", { callbackUrl: "/Dashboard" });
+  };
+
+  const handleManualLogin = (e: any) => {
+    e.preventDefault();
+    alert("Login manual em desenvolvimento...");
+  };
 
   return (
-    <main className="min-h-screen grid grid-cols-1 md:grid-cols-2 bg-background">
     
-      <div className="relative hidden md:block">
-        <Image
-          src="/assests/login-image.png"
-          alt="Comida variada"
-          layout="fill"
-          objectFit="cover"
-          
-        />
-      </div>
+    <div className="relative flex min-h-screen items-center justify-center bg-background px-6 overflow-hidden">
+      
+  
+      <div 
+        className="absolute top-1/4 left-1/4 w-80 h-80 bg-primary opacity-30 rounded-full 
+                   mix-blend-multiply filter blur-3xl animate-blob"
+        style={{ animationDelay: '-2s' }} 
+      />
+ 
+      <div 
+        className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary opacity-30 rounded-full 
+                   mix-blend-multiply filter blur-3xl animate-blob"
+        style={{ animationDelay: '-4s' }}
+      />
+      
+  
+      <div 
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 bg-border opacity-30 rounded-full 
+                   mix-blend-multiply filter blur-3xl animate-blob"
+        style={{ animationDelay: '-6s' }}
+      />
+      
+     
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4 }}
+        
+        className="relative z-10 w-full max-w-sm p-6 rounded-2xl shadow-xl border border-border bg-card" 
+      >
+        {/* Logo */}
+        <motion.div
+          initial={{ scale: 0.9 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 0.4 }}
+          className="flex justify-center"
+        >
+         
+        </motion.div>
 
-    
-      <div className="flex flex-col justify-center items-center px-8 py-10 bg-background">
-        <div className="w-full max-w-md">
-          <h1 className="text-4xl font-bold text-foreground mb-2">Entrar</h1>
-          <p className="text-sm text-foreground font-medium mb-6">
-            Entre com a sua conta
-          </p>
-
-          <form className="space-y-4">
-            <Input
-              placeholder="Seuemail@gmail.com"
-              type="email"
-              variant="formatLogin"
-              
-            />
-            <Input
-              placeholder="Senha"
-              type="password"
-              variant="formatLogin"
-              
-            />
-            <Button
-              type="submit"
-              variant="gradient"
-
-            >
-              Entrar
-            </Button>
-          </form>
-
-          <div className="flex items-center my-6">
-            <div className="flex-grow h-px bg-gray-300" />
-            <span className="mx-2 text-gray-500 text-sm">Ou continue com:</span>
-            <div className="flex-grow h-px bg-gray-300" />
-          </div>
-
-          <div className="flex gap-4">
-            <Button
-              variant="icon"
-             
-            >
-              <FcGoogle className="text-xl" /> Google
-            
-            </Button>
-            <Button
-              variant="icon"
-            >
-              <FaFacebookF className="text-blue-600 text-xl" /> Facebook
-            </Button>
-          </div>
-
-          <p className="text-xs text-gray-600 mt-6 text-center">
-            Ao registrar você concorda com os nossos{' '}
-            <span className="text-foreground underline cursor-pointer">
-              Termos e condições
-            </span>
+        {/* Title */}
+        <div className="text-center mt-6">
+          <h2 className="text-2xl font-semibold text-foreground">
+            Bem-vindo(a)
+          </h2>
+          <p className="text-sm text-muted-foreground">
+            Faça login para continuar
           </p>
         </div>
-      </div>
-    </main>
+
+        {/* Botão Google */}
+        <motion.button
+          onClick={handleGoogleSignIn}
+          disabled={loading}
+          whileHover={{ scale: loading ? 1 : 1.02 }}
+          whileTap={{ scale: loading ? 1 : 0.97 }}
+          className="w-full mt-8 flex items-center justify-center gap-3 bg-purpleMain
+            text-muted font-medium py-3 rounded-xl transition-all
+            hover:bg-purple-hover disabled:opacity-70 disabled:cursor-not-allowed"
+        >
+          {loading ? (
+            <motion.div
+              className="w-6 h-6 border-2 rounded-full border-popover border-t-transparent animate-spin"
+            />
+          ) : (
+            <>
+              <FcGoogle className="text-xl bg-white rounded-sm" />
+              Entrar com Google
+            </>
+          )}
+        </motion.button>
+
+        {/* Rodapé */}
+        <p className="mt-4 text-xs text-center text-muted-foreground">
+          Ao continuar, você concorda com nossos{" "}
+          <span className="text-purpleMain cursor-pointer hover:underline">
+            termos de uso
+          </span>
+          .
+        </p>
+      </motion.div>
+    </div>
   );
 }

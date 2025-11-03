@@ -1,6 +1,7 @@
 "use client";
 
 import { Geist, Geist_Mono } from "next/font/google";
+import { SessionProvider } from 'next-auth/react'; // 👈 NOVO: Importe o SessionProvider
 
 import AppLayout from "@/components/appLayout";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -9,6 +10,7 @@ import { UserProvider } from "@/context/userContext";
 import { usePathname } from "next/navigation";
 
 import "./globals.css";
+import AuthGate from "@/hooks/AuthGate";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,6 +26,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   const pathname = usePathname();
 
   const isLoginPage = pathname === "/Login";
+  
+
+  
   return (
     <html lang="pt-BR" suppressHydrationWarning>
       <body
@@ -41,10 +46,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           enableSystem
           disableTransitionOnChange
         >
-          <UserProvider>
-            {!isLoginPage && <AppLayout>{children}</AppLayout>}
-            {isLoginPage && <main>{children}</main>}
-          </UserProvider>
+
+          <SessionProvider>
+            <UserProvider>
+
+              <AuthGate> 
+                {isLoginPage && <main>{children}</main>}
+                {!isLoginPage && <AppLayout>{children}</AppLayout>}
+              </AuthGate>
+            </UserProvider>
+          </SessionProvider>
         </ThemeProvider>
         <Toaster />
       </body>

@@ -17,7 +17,9 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { SidebarMenu, SidebarMenuItem } from "@/components/ui/sidebar";
 
-import { useUser } from "@/context/userContext";
+import { useSession, signOut } from "next-auth/react"; 
+
+
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -25,24 +27,22 @@ import { toast } from "sonner";
 import { Button } from "./ui/button";
 
 export function NavUserPhoto() {
-    const { user, setUser } = useUser();
+
+    const { data: session, status } = useSession(); 
     const router = useRouter();
 
     const [isLoading, setIsLoading] = useState(false);
+
+    const userName = session?.user?.name || "Usuário";
+    const userImage = session?.user?.image || "/assests/foto.jpg";
 
     const handleLogout = async (): Promise<boolean> => {
         setIsLoading(true);
 
         try {
-            localStorage.removeItem("accessToken");
-            localStorage.removeItem("userId");
-            localStorage.removeItem("userEmail");
-            localStorage.removeItem("user");
-
-            if (setUser) {
-                setUser(null);
-            }
-
+        
+            await signOut({ redirect: false }); 
+       
             toast("Logout bem-sucedido!", {
                 description: "Estamos te direcionando para a página de login.",
                 duration: 2000,
@@ -71,7 +71,8 @@ export function NavUserPhoto() {
             router.push("/Login");
         }
     };
-
+    
+   
     const handleRedirectSetting = () => {
         router.push("/Settings");
     };
@@ -79,6 +80,19 @@ export function NavUserPhoto() {
     const handleRedirectProfile = () => {
         router.push("/MinhaConta");
     };
+
+
+
+    if (status === 'loading') {
+        return (
+             <SidebarMenu>
+                <SidebarMenuItem>
+                    <div className="h-12 w-12 rounded-full bg-muted animate-pulse ml-auto" />
+                </SidebarMenuItem>
+             </SidebarMenu>
+        );
+    }
+
 
     return (
         <SidebarMenu>
@@ -89,18 +103,15 @@ export function NavUserPhoto() {
                             variant="void"
                             className="flex items-center gap-2 w-full p-2 h-auto justify-between"
                         >
+               
                             <span className="text-[16px] font-semibold text-sidebar-foreground leading-tight truncate">
-                                {user?.name || "Usuário"}
+                                {userName}
                             </span>
 
                             <Avatar className="h-12 w-12 ml-auto">
-                                <Image
-                                    src={user?.imagemPerfil || "/assests/foto.jpg"}
-                                    alt={
-                                        user?.name
-                                            ? `${user.name} profile picture`
-                                            : "User profile picture"
-                                    }
+                                <img
+                                    src={userImage}
+                                    alt={`${userName} profile picture`}
                                     width={48}
                                     height={48}
                                     className="rounded-full object-cover"
@@ -108,6 +119,7 @@ export function NavUserPhoto() {
                             </Avatar>
                         </Button>
                     </DropdownMenuTrigger>
+               
                     <DropdownMenuContent
                         className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-[8px]  bg-background text-foreground shadow-md border-secondary border-2"
                         side="bottom"

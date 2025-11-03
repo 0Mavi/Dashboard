@@ -19,4 +19,4 @@ const nextConfig = {
   transpilePackages: ['@appletosolutions/reactbits'],
 };
 
-module.exports = nextConfig;
+export default nextConfig;
