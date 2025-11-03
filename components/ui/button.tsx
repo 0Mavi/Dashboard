@@ -27,7 +27,9 @@ const buttonVariants = cva(
         icon:"w-full bg-foreground flex items-center justify-center gap-2 hover:bg-transparent hover:text-primary border-2 border-foreground text-secondary text-xs ",
         void: "flex w-full text-white items-center  gap-x-1  hover:text-primary",
         opaque: "text-white items-center  gap-x-1  hover:text-primary",
-        defaultV:"bg-primary text-muted shadow items-center border-2 border-primary gap-x-1 hover:bg-transparent hover:text-primary"
+        defaultV:"bg-primary text-muted shadow items-center border-2 border-primary gap-x-1 hover:bg-transparent hover:text-primary",
+        home:
+          "flex w-full bg-primary text-muted shadow items-center border-2 border-primary gap-x-1 hover:bg-transparent hover:text-primary rounded-full",
       },
       size: {
         default: "h-9 px-4 py-2 rounded-xl",

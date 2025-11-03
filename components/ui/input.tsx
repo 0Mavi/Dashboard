@@ -16,6 +16,8 @@ const inputVariants = cva(
 					"flex h-10 w-full rounded-md border-2 border-primary bg-white/5 text-black px-3 py-2 text-sm file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none focus-visible:border-primary-300",
 				formatLogin: 
 					"flex h-10 w-full rounded-md bg-secondary/40 text-foreground px-3 py-2 text-sm file:bg-transparent file:text-sm file:font-medium focus-visible:outline-primary focus-visible:border-primary", 
+				formatRegisterV:
+					"flex h-10 w-full rounded-xl border-2 border-primary bg-white/5 text-black px-3 py-2 text-sm file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none focus-visible:border-primary-300",	
 				},	
 		},
 	},

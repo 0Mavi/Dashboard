@@ -34,7 +34,7 @@ import { cn } from "@/lib/utils";
 const navData = [
     {
         title: "Visão Geral",
-        url: "/dashboard",
+        url: "/Dashboard",
         icon: LayoutDashboard,
         isActive: false,
     },

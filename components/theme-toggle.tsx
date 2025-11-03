@@ -58,7 +58,7 @@ export function ThemeSelector() {
           <DropdownMenuItem
             key={t.value}
             onClick={() => setTheme(t.value)}
-            className="flex items-center gap-2 px-4 py-2 hover:bg-popover hover:text-primary cursor-pointer"
+            className="flex items-center gap-2 px-4 py-2 hover:bg-popover hover:text-white cursor-pointer"
           >
             <div className="flex w-full items-center justify-between">
               <span>{t.label}</span>

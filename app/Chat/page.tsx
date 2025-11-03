@@ -1,3 +1,5 @@
+'use client';
+
 import { InputArea } from "@/components/Chat/InputArea";
 import { QuickActions } from "@/components/Chat/QuickActions";
 

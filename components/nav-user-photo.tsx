@@ -109,7 +109,7 @@ export function NavUserPhoto() {
                         </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent
-                        className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg bg-background text-foreground shadow-md border-secondary border-2"
+                        className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-[8px]  bg-background text-foreground shadow-md border-secondary border-2"
                         side="bottom"
                         align="end"
                         sideOffset={4}

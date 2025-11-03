@@ -1,3 +1,5 @@
+'use client';
+
 // components/QuickActions.tsx
 import { Button } from "@/components/ui/button";
 
