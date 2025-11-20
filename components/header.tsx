@@ -2,7 +2,6 @@ import { Bell } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 
-
 import { Button } from "./ui/button";
 import { NavUserPhoto } from "./nav-user-photo";
 import { ThemeSelector } from "./theme-toggle";

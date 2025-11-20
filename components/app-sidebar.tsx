@@ -40,7 +40,7 @@ const navData = [
     },
     {
         title: "Calendário",
-        url: "/products",
+        url: "/Calendario",
         icon: Box,
         isActive: false,
     },
@@ -65,18 +65,18 @@ const navData = [
  
 ];
 
-const systemNav = [
-    {
-        title: "Configurações",
-        url: "/Settings",
-        icon: Settings,
-    },
-    {
-        title: "Meu Perfil",
-        url: "/Profile",
-        icon: User,
-    },
-];
+// const systemNav = [
+//     {
+//         title: "Configurações",
+//         url: "/Settings",
+//         icon: Settings,
+//     },
+//     {
+//         title: "Meu Perfil",
+//         url: "/Profile",
+//         icon: User,
+//     },
+// ];
 
 const suportNav = [
     {
@@ -118,9 +118,9 @@ export default function AppSidebar({
                 <NavMain items={navData} />
              
 
-                <span className={cn(!open && "hidden") || "text-sm text-muted-foreground p-2" }>Sistema</span>
+                {/* <span className={cn(!open && "hidden") || "text-sm text-muted-foreground p-2" }>Sistema</span>
 
-                <NavMain items={systemNav} />
+                <NavMain items={systemNav} /> */}
 
             </SidebarContent>
             <SidebarRail />

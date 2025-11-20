@@ -1,58 +1,44 @@
-
 "use client";
 
-import { useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react"; 
 
-const publicRoutes = ["/Login", "/"]; 
+const publicRoutes = ["/Login", "/", "/auth/google/callback"]; 
 
 export default function AuthGate({ children }: { children: React.ReactNode }) {
-    const { status } = useSession(); 
-    const pathname = usePathname();
-    const router = useRouter();
+  const pathname = usePathname();
+  const router = useRouter();
 
-    const [hasCheckedAuth, setHasCheckedAuth] = useState(false); 
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const token =
+      typeof window !== "undefined"
+        ? localStorage.getItem("access_token")
+        : null;
 
     const isPublic = publicRoutes.includes(pathname);
-    const isAuthChecking = status === 'loading';
-    const isUnauthenticated = status === 'unauthenticated';
-    const isAuthenticated = status === 'authenticated';
 
-    useEffect(() => {
-        if (status !== 'loading' && !hasCheckedAuth) {
-            setHasCheckedAuth(true);
-        }
-
-        if (isAuthChecking) return; 
-        
-        if (!isPublic && isUnauthenticated) {
-            router.push("/Login");
-            return; 
-        } 
-        
-        if (pathname === "/Login" && isAuthenticated) {
-            router.push("/Dashboard"); 
-            return; 
-        }
-    }, [status, hasCheckedAuth, isAuthenticated, isUnauthenticated, pathname, router, isPublic, isAuthChecking]);
-
-    
-    if (isAuthChecking && !isPublic && !hasCheckedAuth) {
-        return (
-            <div className="flex justify-center items-center min-h-screen text-lg">
-                Carregando sincronização...
-            </div>
-        ); 
+    if (!token && !isPublic) {
+      router.push("/Login");
+      return;
     }
 
-    if (isUnauthenticated && !isPublic) {
-        return (
-            <div className="flex justify-center items-center min-h-screen text-lg">
-                Redirecionando...
-            </div>
-        );
+    if (token && pathname === "/Login") {
+      router.push("/Dashboard");
+      return;
     }
 
-    return <>{children}</>;
+    setLoading(false);
+  }, [pathname, router]);
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen text-lg">
+        Carregando...
+      </div>
+    );
+  }
+
+  return <>{children}</>;
 }
