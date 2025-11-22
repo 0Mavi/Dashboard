@@ -8,6 +8,7 @@ import {
     SidebarMenuItem,
 } from "@/components/ui/sidebar"; 
 import { useEffect, useState } from "react";
+import { Collapsible } from "./ui/collapsible";
 
 
 
