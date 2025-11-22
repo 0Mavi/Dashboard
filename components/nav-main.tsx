@@ -6,13 +6,10 @@ import {
     SidebarMenu,
     SidebarMenuButton,
     SidebarMenuItem,
-} from "@/components/ui/sidebar";
+} from "@/components/ui/sidebar"; 
 import { useEffect, useState } from "react";
-import {
-    Collapsible,
-    CollapsibleContent,
-    CollapsibleTrigger,
-} from "./ui/collapsible";
+
+
 
 export function NavMain({
     items,
@@ -26,12 +23,14 @@ export function NavMain({
     const [activeItem, setActiveItem] = useState<string>("");
     const [pathname, setPathname] = useState<string>("");
 
+   
     useEffect(() => {
         if (typeof window !== "undefined") {
             setPathname(window.location.pathname);
         }
     }, []);
 
+   
     useEffect(() => {
         if (pathname) {
             const activeMainItem = items.find((item) => item.url === pathname);
@@ -41,6 +40,7 @@ export function NavMain({
         }
     }, [pathname, items]);
 
+
     const handleItemClick = (url: string) => {
         setActiveItem(url);
     };
@@ -49,6 +49,7 @@ export function NavMain({
         <SidebarGroup>
             <SidebarMenu>
                 {items.map((item) => (
+
                     <Collapsible
                         key={item.title}
                         asChild
@@ -91,6 +92,7 @@ export function NavMain({
                                
                         </SidebarMenuItem>
                     </Collapsible>
+
                 ))}
             </SidebarMenu>
         </SidebarGroup>
