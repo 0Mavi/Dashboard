@@ -1,86 +1,66 @@
-import Image from "next/image";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { FcGoogle } from "react-icons/fc";
-import { FaFacebookF } from "react-icons/fa";
+"use client";
 
+import { motion } from "framer-motion";
+import { FcGoogle } from "react-icons/fc";
+import { useState } from "react";
+
+const GOOGLE_AUTH_URL =
+  "https://accounts.google.com/o/oauth2/v2/auth?client_id=724483825253-erp9rk04ot3r24a6npfamikdpmouprlg.apps.googleusercontent.com&redirect_uri=https://calendaraiapi.onrender.com/auth/google/login/&response_type=code&scope=https://www.googleapis.com/auth/calendar%20https://www.googleapis.com/auth/calendar.events%20openid%20email%20profile&access_type=offline&prompt=consent";
 
 export default function LoginPage() {
+  const [loading, setLoading] = useState(false);
 
-  
+  const handleGoogleSignIn = () => {
+    setLoading(true);
+    window.location.href = GOOGLE_AUTH_URL; // 👈 usa a URL que o back mandou
+  };
 
   return (
-    <main className="min-h-screen grid grid-cols-1 md:grid-cols-2 bg-background">
-    
-      <div className="relative hidden md:block">
-        <Image
-          src="/assests/login-image.png"
-          alt="Comida variada"
-          layout="fill"
-          objectFit="cover"
-          
-        />
-      </div>
+    <div className="relative flex min-h-screen items-center justify-center bg-background px-6 overflow-hidden">
+      {/* ... resto do layout igual ... */}
 
-    
-      <div className="flex flex-col justify-center items-center px-8 py-10 bg-background">
-        <div className="w-full max-w-md">
-          <h1 className="text-4xl font-bold text-foreground mb-2">Entrar</h1>
-          <p className="text-sm text-foreground font-medium mb-6">
-            Entre com a sua conta
-          </p>
-
-          <form className="space-y-4">
-            <Input
-              placeholder="Seuemail@gmail.com"
-              type="email"
-              variant="formatLogin"
-              
-            />
-            <Input
-              placeholder="Senha"
-              type="password"
-              variant="formatLogin"
-              
-            />
-            <Button
-              type="submit"
-              variant="gradient"
-
-            >
-              Entrar
-            </Button>
-          </form>
-
-          <div className="flex items-center my-6">
-            <div className="flex-grow h-px bg-gray-300" />
-            <span className="mx-2 text-gray-500 text-sm">Ou continue com:</span>
-            <div className="flex-grow h-px bg-gray-300" />
-          </div>
-
-          <div className="flex gap-4">
-            <Button
-              variant="icon"
-             
-            >
-              <FcGoogle className="text-xl" /> Google
-            
-            </Button>
-            <Button
-              variant="icon"
-            >
-              <FaFacebookF className="text-blue-600 text-xl" /> Facebook
-            </Button>
-          </div>
-
-          <p className="text-xs text-gray-600 mt-6 text-center">
-            Ao registrar você concorda com os nossos{' '}
-            <span className="text-foreground underline cursor-pointer">
-              Termos e condições
-            </span>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4 }}
+        className="relative z-10 w-full max-w-sm p-6 rounded-2xl shadow-xl border border-border bg-card"
+      >
+        <div className="text-center mt-6">
+          <h2 className="text-2xl font-semibold text-foreground">
+            Bem-vindo(a)
+          </h2>
+          <p className="text-sm text-muted-foreground">
+            Faça login para continuar
           </p>
         </div>
-      </div>
-    </main>
+
+        <motion.button
+          onClick={handleGoogleSignIn}
+          disabled={loading}
+          whileHover={{ scale: loading ? 1 : 1.02 }}
+          whileTap={{ scale: loading ? 1 : 0.97 }}
+          className="w-full mt-8 flex items-center justify-center gap-3 bg-purpleMain
+            text-foreground font-medium py-3 rounded-xl transition-all
+            hover:bg-purple-hover disabled:opacity-70 disabled:cursor-not-allowed"
+        >
+          {loading ? (
+            <motion.div className="w-6 h-6 border-2 rounded-full border-popover border-t-transparent animate-spin " />
+          ) : (
+            <>
+              <FcGoogle className="text-xl bg-white rounded-full" />
+              Entrar com Google
+            </>
+          )}
+        </motion.button>
+
+        <p className="mt-4 text-xs text-center text-muted-foreground">
+          Ao continuar, você concorda com nossos{" "}
+          <span className="text-purpleMain cursor-pointer hover:underline">
+            termos de uso
+          </span>
+          .
+        </p>
+      </motion.div>
+    </div>
   );
 }

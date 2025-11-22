@@ -34,49 +34,44 @@ import { cn } from "@/lib/utils";
 const navData = [
     {
         title: "Visão Geral",
-        url: "/dashboard",
+        url: "/Dashboard",
         icon: LayoutDashboard,
         isActive: false,
     },
     {
         title: "Calendário",
-        url: "/products",
+        url: "/Calendario",
         icon: Box,
         isActive: false,
     },
      {
         title: "Chat",
-        url: "/stock",
+        url: "/Chat",
         icon: Box,
         isActive: false,
     },
      {
         title: "Plano de Estudos",
-        url: "/buy",
+        url: "/Plans",
         icon: Box,
         isActive: false,
     },
-    {
-        title: "Joguinhos",
-        url: "/clients",
-        icon: Users,
-        isActive: false,
-    },
+  
  
 ];
 
-const systemNav = [
-    {
-        title: "Configurações",
-        url: "/Settings",
-        icon: Settings,
-    },
-    {
-        title: "Meu Perfil",
-        url: "/Profile",
-        icon: User,
-    },
-];
+// const systemNav = [
+//     {
+//         title: "Configurações",
+//         url: "/Settings",
+//         icon: Settings,
+//     },
+//     {
+//         title: "Meu Perfil",
+//         url: "/Profile",
+//         icon: User,
+//     },
+// ];
 
 const suportNav = [
     {
@@ -118,9 +113,11 @@ export default function AppSidebar({
                 <NavMain items={navData} />
              
 
-                <span className={cn(!open && "hidden") || " p-2" }>Sistema</span>
 
-                <NavMain items={systemNav} />
+                {/* <span className={cn(!open && "hidden") || "text-sm text-muted-foreground p-2" }>Sistema</span>
+
+
+                <NavMain items={systemNav} /> */}
 
             </SidebarContent>
             <SidebarRail />

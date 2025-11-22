@@ -11,7 +11,170 @@ body {
 	font-family: "Roboto Slab", sans-serif;
 }
 
+
 @layer base {
+
+ :root {
+  /* ====================== THEME: LIGHT (CLÁSSICO) ====================== */
+  --background: 0 0% 100%;
+  --foreground: 240 10% 3.9%; /* #0A0A0A */
+
+  --card: 0 0% 100%;
+  --card-foreground: 240 10% 3.9%;
+
+  --popover: 0 0% 100%;
+  --popover-foreground: 240 10% 3.9%;
+
+  --primary: 240 5.9% 10%;
+  --primary-foreground: 0 0% 98%;
+
+  --secondary: 240 4.8% 95.9%;
+  --secondary-foreground: 240 5.9% 10%;
+
+  --muted: 240 4.8% 95.9%;
+  --muted-foreground: 240 3.7% 61.5%;
+
+  --accent: 240 4.8% 95.9%;
+  --accent-foreground: 240 5.9% 10%;
+
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 0 0% 98%;
+
+  --border: 240 5.9% 90%;
+  --input: 240 5.9% 90%;
+  --ring: 240 5.9% 10%;
+
+  --sidebar-background: 0 0% 100%;
+  --sidebar-foreground: 240 10% 3.9%;
+  --sidebar-primary: 240 5.9% 10%;
+  --sidebar-primary-foreground: 0 0% 98%;
+  --sidebar-accent: 240 4.8% 95.9%;
+  --sidebar-accent-foreground: 240 5.9% 10%;
+  --sidebar-border: 240 5.9% 90%;
+  --sidebar-ring: 240 5.9% 10%;
+}
+
+.dark {
+  /* ====================== THEME: DARK (CLÁSSICO) ====================== */
+  --background: 240 10% 3.9%;
+  --foreground: 0 0% 98%; /* #FAFAFA */
+
+  --card: 240 10% 3.9%;
+  --card-foreground: 0 0% 98%;
+
+  --popover: 240 10% 3.9%;
+  --popover-foreground: 0 0% 98%;
+
+  --primary: 0 0% 98%;
+  --primary-foreground: 240 10% 3.9%;
+
+  --secondary: 240 3.7% 15.9%;
+  --secondary-foreground: 0 0% 98%;
+
+  --muted: 240 3.7% 15.9%;
+  --muted-foreground: 240 5% 64.9%;
+
+  --accent: 240 3.7% 15.9%;
+  --accent-foreground: 0 0% 98%;
+
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 98%;
+
+  --border: 240 3.7% 15.9%;
+  --input: 240 3.7% 15.9%;
+  --ring: 0 0% 98%;
+
+  --sidebar-background: 240 10% 3.9%;
+  --sidebar-foreground: 0 0% 98%;
+  --sidebar-primary: 0 0% 98%;
+  --sidebar-primary-foreground: 240 10% 3.9%;
+  --sidebar-accent: 240 3.7% 15.9%;
+  --sidebar-accent-foreground: 0 0% 98%;
+  --sidebar-border: 240 3.7% 15.9%;
+  --sidebar-ring: 0 0% 98%;
+}
+/* ====================== THEME: PURPLE (ROXO) ====================== */
+
+.purple {
+  --background: 292 84% 90%; /* Cor: #F9D0FB (Lilás Quase Branco) - Fundo principal */
+  --foreground: 280 40% 16%; /* Cor: #2C163B (Roxo Profundo) - Texto principal */
+
+  --card: 292 84% 92%; /* Levemente mais claro que o fundo */
+  --card-foreground: 280 40% 16%; /* Cor fixa: #2C163B */
+
+  --popover: 292 84% 92%;
+  --popover-foreground: 280 40% 16%; /* Cor fixa: #2C163B */
+
+  --primary: 265 37% 53%; /* Cor: #7F5DB3 (Roxo Médio) - Destaque principal */
+  --primary-foreground: 0 0% 98%;
+
+  --secondary: 279 38% 57%; /* Cor: #A267BF (Lilás Suave) */
+  --secondary-foreground: 280 40% 16%; /* Cor fixa: #2C163B */
+
+  --muted: 270 45% 75%; /* Cor: #D8A0F0 (Lilás Lavanda Muted) */
+  --muted-foreground: 250 20% 30%; /* Roxo mais apagado para subtexto */
+
+  --accent: 257 49% 44%; /* Cor: #543CA4 (Roxo Intenso) - Destaque Intenso/Eletrico */
+  --accent-foreground: 0 0% 98%;
+
+  --destructive: 0 70% 50%; /* Mantendo vermelho forte para alerta */
+  --destructive-foreground: 0 0% 98%;
+
+  --border: 279 25% 70%; /* Lilás Lavanda para bordas */
+  --input: 292 84% 90%; /* #F9D0FB */
+  --ring: 257 49% 44%; /* Cor: #543CA4 (Roxo Intenso) - Focus Ring */
+
+  /* Sidebar: CORES FIXAS */
+  --sidebar-background: 280 40% 16%; /* Cor: #2C163B (Roxo Profundo) - Fundo Sidebar */
+  --sidebar-foreground: 292 84% 90%; /* Cor: #F9D0FB (Lilás Quase Branco) - Texto Sidebar */
+  --sidebar-primary: 265 37% 53%; /* Cor: #7F5DB3 (Roxo Médio) - Item ativo */
+  --sidebar-primary-foreground: 0 0% 98%;
+  --sidebar-accent: 257 49% 44%; /* Cor: #543CA4 */
+  --sidebar-accent-foreground: 0 0% 98%;
+  --sidebar-border: 307 33% 29%; /* Cor: #613367 (Roxo Escuro Profundo) - Divisores */
+  --sidebar-ring: 257 49% 44%;
+}
+
+
+
+/* ====================== THEME: GREEN (VERDE) ====================== */
+.green {
+   --background: 147 67% 94%;
+  --foreground: 180 20% 21%;
+
+  --card: 147 67% 96%;
+  --card-foreground: 180 20% 21%; 
+
+  --popover: 147 67% 96%;
+  --popover-foreground: 180 20% 21%; 
+
+  --primary: 172 45% 41%;
+  --primary-foreground: 0 0% 98%;
+
+  --secondary: 177 50% 65%;
+  --secondary-foreground: 180 20% 21%; 
+
+  --muted: 177 17% 73%;
+  --muted-foreground: 180 20% 21%; 
+
+  --accent: 172 45% 41%;
+  --accent-foreground: 0 0% 98%;
+
+  --border: 177 22% 60%;
+  --input: 147 67% 90%;
+  --ring: 172 45% 41%;
+
+  
+  --sidebar-background: 180 20% 21%;
+  --sidebar-foreground: 147 67% 94%;
+  --sidebar-primary: 167 52% 70%;
+  --sidebar-primary-foreground: 180 20% 21%;
+  --sidebar-accent: 172 45% 41%;
+  --sidebar-accent-foreground: 0 0% 98%;
+  --sidebar-border: 177 50% 17%;
+  --sidebar-ring: 172 45% 41%;
+}
+=======
   :root {
     --background: 210 10% 96%; /* #F2F3F4 */
     --foreground: 210 50% 20%; /* #174871 */
@@ -104,6 +267,7 @@ body {
     --sidebar-border: 210 40% 40%; /* #174871 */
     --sidebar-ring: 330 20% 65%; /* #A77693 */
   }
+
 }
 
 

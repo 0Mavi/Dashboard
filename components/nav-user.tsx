@@ -98,14 +98,14 @@ export function NavUser() {
             <SidebarMenuItem>
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                        <Button variant="void" className="flex items-center gap-2 w-full p-2 h-auto"> 
-                            <Avatar className="h-12 w-12">
+                        <Button variant="void" className="flex items-center gap-2 p-2 "> 
+                            <Avatar className="h-6 w-6">
                                
                                 <Image
-                                    src={user?.imagemPerfil || "/assests/marmita.png"}
+                                    src={user?.imagemPerfil || "/default-profile.png"}
                                     alt={user?.name ? `${user.name} profile picture` : "User profile picture"}
-                                    width={48}
-                                    height={48}
+                                    width={40}
+                                    height={40}
                                     className="rounded-full object-cover" 
                                 />
                             </Avatar>

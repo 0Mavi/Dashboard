@@ -1,7 +1,6 @@
 "use client";
 
 import type { LucideIcon } from "lucide-react";
-
 import {
     SidebarGroup,
     SidebarMenu,
@@ -50,27 +49,50 @@ export function NavMain({
         <SidebarGroup>
             <SidebarMenu>
                 {items.map((item) => (
-                  
-                    <SidebarMenuItem key={item.title}>
-                        <SidebarMenuButton
-                            tooltip={item.title}
-                            onClick={() => handleItemClick(item.url)}
-                            isActive={activeItem === item.url}
-                          
-                            className="hover:bg-foreground hover:text-white"
-                            asChild
-                        >
-                            <a href={item.url}>
-                                {item.icon && (
-                                    <item.icon 
-                                      
-                                        className={activeItem === item.url ? "text-white" : "text-foreground group-hover:text-white"}
-                                    />
-                                )}
-                                <span>{item.title}</span>
-                            </a>
-                        </SidebarMenuButton>
-                    </SidebarMenuItem>
+
+                    <Collapsible
+                        key={item.title}
+                        asChild
+                        defaultOpen={true}
+                        className="group/collapsible"
+                    >
+                        <SidebarMenuItem key={item.title}>
+                           
+                                    <SidebarMenuButton
+                                        tooltip={item.title}
+                                        onClick={() => handleItemClick(item.url)}
+                                        isActive={activeItem === item.url}
+                                        asChild
+                                        className={`
+                                            transition-colors duration-200 
+                                            rounded-[5px] px-2 py-1.5 w-full flex items-center gap-2 
+                                            ${
+                                                activeItem === item.url
+                                                    ? "bg-sidebar-primary text-sidebar-primary-foreground"
+                                                    : "text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground "
+                                            }
+                                        `}
+                                    >
+                                        <a href={item.url}>
+                                            {item.icon && (
+                                                <item.icon
+                                                    className={`
+                                                        w-5 h-5 transition-colors duration-200
+                                                        ${
+                                                            activeItem === item.url
+                                                                ? "text-sidebar-primary"
+                                                                : "text-sidebar-foreground group-hover/collapsible:text-sidebar-accent-foreground"
+                                                        }
+                                                    `}
+                                                />
+                                            )}
+                                            <span className="truncate">{item.title}</span>
+                                        </a>
+                                    </SidebarMenuButton>
+                               
+                        </SidebarMenuItem>
+                    </Collapsible>
+
                 ))}
             </SidebarMenu>
         </SidebarGroup>

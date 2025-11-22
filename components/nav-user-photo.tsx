@@ -1,148 +1,157 @@
 "use client";
 
 import {
-    BadgeCheck,
-    LogOut,
-    Settings,
+  BadgeCheck,
+  LogOut,
+  Settings,
 } from "lucide-react";
 
-import { Avatar } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuGroup,
-    DropdownMenuItem,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+
 import { SidebarMenu, SidebarMenuItem } from "@/components/ui/sidebar";
 
-import { useUser } from "@/context/userContext";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { toast } from "sonner";
 import { Button } from "./ui/button";
 
 export function NavUserPhoto() {
-    const { user, setUser } = useUser();
-    const router = useRouter();
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+  const [user, setUser] = useState<any>(null);
 
-    const [isLoading, setIsLoading] = useState(false);
+  useEffect(() => {
+    const userData = typeof window !== "undefined"
+      ? localStorage.getItem("user")
+      : null;
 
-    const handleLogout = async (): Promise<boolean> => {
-        setIsLoading(true);
+    if (userData) {
+      try {
+        setUser(JSON.parse(userData));
+      } catch {
+        console.error("Erro ao carregar usuário do localStorage");
+      }
+    }
+  }, []);
 
-        try {
-            localStorage.removeItem("accessToken");
-            localStorage.removeItem("userId");
-            localStorage.removeItem("userEmail");
-            localStorage.removeItem("user");
+  const userName: string = user?.name ?? "Usuário";
+  const userImage: string | undefined = user?.image;
 
-            if (setUser) {
-                setUser(null);
-            }
 
-            toast("Logout bem-sucedido!", {
-                description: "Estamos te direcionando para a página de login.",
-                duration: 2000,
-                className: "bg-background text-foreground border border-foreground",
-            });
+  const initials = userName
+    .split(" ")
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((n) => n[0]?.toUpperCase() ?? "")
+    .join("") || "U";
 
-            return true;
-        } catch (err: any) {
-            console.error("Erro ao fazer logout:", err);
+  const handleLogout = () => {
+    setIsLoading(true);
 
-            toast("Erro ao desconectar!", {
-                description: err.message || "Ocorreu um erro ao tentar fazer logout.",
-                duration: 3000,
-                className: "bg-background text-foreground border border-foreground",
-            });
+    try {
+      localStorage.removeItem("access_token");
+      localStorage.removeItem("refresh_token");
+      localStorage.removeItem("id_token");
+      localStorage.removeItem("user");
 
-            return false;
-        } finally {
-            setIsLoading(false);
-        }
-    };
+      toast("Logout bem-sucedido!", {
+        duration: 2000,
+      });
 
-    const onSubmit = async () => {
-        const logoutSuccessful = await handleLogout();
-        if (logoutSuccessful) {
-            router.push("/Login");
-        }
-    };
+      router.push("/Login");
+    } catch (err: any) {
+      console.error(err);
 
-    const handleRedirectSetting = () => {
-        router.push("/Settings");
-    };
+      toast("Erro ao desconectar!", {
+        description: err.message,
+        duration: 3000,
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-    const handleRedirectProfile = () => {
-        router.push("/MinhaConta");
-    };
+  const handleRedirectSetting = () => router.push("/Settings");
+  const handleRedirectProfile = () => router.push("/MinhaConta");
 
+  if (!user) {
     return (
-        <SidebarMenu>
-            <SidebarMenuItem>
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <Button
-                            variant="void"
-                            className="flex items-center gap-2 w-full p-2 h-auto justify-between"
-                        >
-                            <span className="text-[16px] font-semibold text-foreground leading-tight truncate">
-                                {user?.name || "Usuário"}
-                            </span>
-                            <Avatar className="h-12 w-12 ml-auto">
-                                <Image
-                                    src={user?.imagemPerfil || "/assests/foto.jpg"}
-                                    alt={
-                                        user?.name
-                                            ? `${user.name} profile picture`
-                                            : "User profile picture"
-                                    }
-                                    width={48}
-                                    height={48}
-                                    className="rounded-full object-cover"
-                                />
-                            </Avatar>
-                        </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent
-                        className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg bg-background text-foreground shadow-md border-secondary border-2"
-                        side="bottom"
-                        align="end"
-                        sideOffset={4}
-                    >
-                        <DropdownMenuGroup>
-                            <DropdownMenuItem
-                                className="flex items-center gap-2 px-4 py-2 hover:bg-popover hover:text-white cursor-pointer"
-                                onClick={handleRedirectProfile}
-                            >
-                                <BadgeCheck size={18} />
-                                <span className="text-sm">Minha conta</span>
-                            </DropdownMenuItem>
-                            <DropdownMenuItem
-                                className="flex items-center gap-2 px-4 py-2 hover:bg-popover hover:text-white cursor-pointer"
-                                onClick={handleRedirectSetting}
-                            >
-                                <Settings size={18} />
-                                <span className="text-sm">Configurações</span>
-                            </DropdownMenuItem>
-                        </DropdownMenuGroup>
-                        <DropdownMenuSeparator className="bg-popover" />
-                        <DropdownMenuItem
-                            className="flex items-center gap-2 px-4 py-2 hover:bg-popover hover:text-white cursor-pointer"
-                            onClick={onSubmit}
-                            disabled={isLoading}
-                        >
-                            <LogOut size={18} />
-                            <span className="text-sm">
-                                {isLoading ? "Saindo..." : "Desconectar"}
-                            </span>
-                        </DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
-            </SidebarMenuItem>
-        </SidebarMenu>
+      <SidebarMenu>
+        <SidebarMenuItem>
+          <div className="h-12 w-12 rounded-full bg-muted animate-pulse ml-auto" />
+        </SidebarMenuItem>
+      </SidebarMenu>
     );
+  }
+
+  return (
+    <SidebarMenu>
+      <SidebarMenuItem>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button
+              variant="void"
+              className="flex items-center gap-2 w-full p-2 h-auto justify-between"
+            >
+              <span className="text-[16px] font-semibold text-sidebar-foreground leading-tight truncate">
+                {userName}
+              </span>
+
+              <Avatar className="h-9 w-9 ml-auto flex items-center justify-center bg-muted text-sm  text-foreground font-semibold">
+                
+                <AvatarImage src={userImage} alt={userName} />
+                <AvatarFallback>{initials}</AvatarFallback>
+            
+              </Avatar>
+            </Button>
+          </DropdownMenuTrigger>
+
+          <DropdownMenuContent
+            className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-[8px] bg-background text-foreground shadow-md border-secondary border-2"
+            side="bottom"
+            align="end"
+            sideOffset={4}
+          >
+            <DropdownMenuGroup>
+              <DropdownMenuItem
+                className="flex items-center gap-2 px-4 py-2 hover:bg-popover hover:text-white cursor-pointer"
+                onClick={handleRedirectProfile}
+              >
+                <BadgeCheck size={18} />
+                <span className="text-sm">Minha conta</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                className="flex items-center gap-2 px-4 py-2 hover:bg-popover hover:text-white cursor-pointer"
+                onClick={handleRedirectSetting}
+              >
+                <Settings size={18} />
+                <span className="text-sm">Configurações</span>
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
+
+            <DropdownMenuSeparator className="bg-popover" />
+
+            <DropdownMenuItem
+              className="flex items-center gap-2 px-4 py-2 hover:bg-popover hover:text-white cursor-pointer"
+              onClick={handleLogout}
+              disabled={isLoading}
+            >
+              <LogOut size={18} />
+              <span className="text-sm">
+                {isLoading ? "Saindo..." : "Desconectar"}
+              </span>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </SidebarMenuItem>
+    </SidebarMenu>
+  );
 }

@@ -10,24 +10,26 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "flex w-full bg-primary text-white shadow items-center border-2 border-primary gap-x-1 hover:bg-transparent hover:text-primary",
+          "flex w-full bg-primary text-foreground shadow items-center border-2 border-primary gap-x-1 hover:bg-transparent hover:text-primary",
         destructive:
-          "bg-destructive text-white shadow-sm hover:bg-destructive/90",
+          "bg-destructive text-foreground shadow-sm hover:bg-destructive/90",
         outline:
-          "border-2 border-primary bg-transparent text-primary hover:border-primary hover:bg-primary hover:text-white",
+          "border-2 border-primary bg-transparent text-foreground hover:border-primary hover:bg-primary hover:text-white",
         graphic:
           "border-2 border-foreground bg-transparent text-black hover:border-primary hover:bg-foreground/10",
         secondary:
           "bg-foreground text-primary border-2 border-foreground shadow-sm hover:bg-foreground/10 hover:border-primary hover:text-foreground",
         transparent: "flex w-auto bg-transparent p-0",
         ghost:
-          "bg-secondary text-white hover:border-primary border-2 hover:border-secondary hover:text-secondary hover:bg-transparent",
+          "bg-secondary text-foreground hover:border-primary border-2 hover:border-secondary hover:text-secondary hover:bg-transparent",
         link: "text-primary underline-offset-4 hover:underline",
         gradient: "w-full bg-gradient-to-r from-primary to-foreground text-white hover:opacity-90 ",
-        icon:"w-full bg-foreground flex items-center justify-center gap-2 hover:bg-transparent hover:text-primary border-2 border-foreground text-white text-xs ",
+        icon:"w-full bg-foreground flex items-center justify-center gap-2 hover:bg-transparent hover:text-primary border-2 border-foreground text-secondary text-xs ",
         void: "flex w-full text-white items-center  gap-x-1  hover:text-primary",
         opaque: "text-white items-center  gap-x-1  hover:text-primary",
-        defaultV:"bg-primary text-white shadow items-center border-2 border-primary gap-x-1 hover:bg-transparent hover:text-primary"
+        defaultV:"bg-primary text-muted shadow items-center border-2 border-primary gap-x-1 hover:bg-transparent hover:text-primary",
+        home:
+          "flex w-full bg-primary text-muted shadow items-center border-2 border-primary gap-x-1 hover:bg-transparent hover:text-primary rounded-full",
       },
       size: {
         default: "h-9 px-4 py-2 rounded-xl",
