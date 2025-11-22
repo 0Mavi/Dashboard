@@ -1,6 +1,13 @@
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
-async function request(path: string, options: RequestInit = {}) {
+
+interface ApiResponse<T = any> {
+  ok: boolean;
+  status: number;
+  data: T | null;
+}
+
+async function request(path: string, options: RequestInit = {}): Promise<ApiResponse> {
   const token =
     typeof window !== "undefined"
       ? localStorage.getItem("access_token")
@@ -29,6 +36,12 @@ async function request(path: string, options: RequestInit = {}) {
   if (token) {
     headers["Authorization"] = `Bearer ${token}`;
   }
+  
+
+  if (!API_URL) {
+    console.error("NEXT_PUBLIC_API_URL não está definido nas variáveis de ambiente.");
+    return { ok: false, status: 500, data: { message: "API URL não configurada" } };
+  }
 
   const res = await fetch(`${API_URL}${path}`, {
     ...options,
@@ -44,24 +57,24 @@ async function request(path: string, options: RequestInit = {}) {
   };
 }
 
-export function apiGet(path: string) {
+export function apiGet(path: string): Promise<ApiResponse> {
   return request(path, { method: "GET" });
 }
 
-export function apiPost(path: string, body: any) {
+export function apiPost(path: string, body: any): Promise<ApiResponse> {
   return request(path, {
     method: "POST",
     body: JSON.stringify(body),
   });
 }
 
-export function apiPut(path: string, body: any) {
+export function apiPut(path: string, body: any): Promise<ApiResponse> {
   return request(path, {
     method: "PUT",
     body: JSON.stringify(body),
   });
 }
 
-export function apiDelete(path: string) {
+export function apiDelete(path: string): Promise<ApiResponse> {
   return request(path, { method: "DELETE" });
 }

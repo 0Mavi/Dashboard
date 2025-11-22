@@ -26,12 +26,11 @@ export default function GoogleCallbackPage() {
     const idToken = searchParams.get("id_token");
 
     if (!accessToken) {
-   
       router.replace("/Login");
       return;
     }
 
-    // salva tokens
+
     localStorage.setItem("access_token", accessToken);
     if (refreshToken) localStorage.setItem("refresh_token", refreshToken);
     if (idToken) localStorage.setItem("id_token", idToken);
@@ -39,13 +38,17 @@ export default function GoogleCallbackPage() {
     if (idToken) {
       const payload = parseJwt(idToken);
 
+      localStorage.setItem("name", payload.name);
+      localStorage.setItem("email", payload.email);
+      localStorage.setItem("google_id", payload.sub);
+
       const user = {
         name:
           payload.name ||
           `${payload.given_name ?? ""} ${payload.family_name ?? ""}`.trim() ||
           "Usuário",
         email: payload.email,
-        image: payload.picture, 
+        image: payload.picture,
       };
 
       localStorage.setItem("user", JSON.stringify(user));

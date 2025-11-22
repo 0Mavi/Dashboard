@@ -105,7 +105,7 @@ export function NavUserPhoto() {
                 {userName}
               </span>
 
-              <Avatar className="h-12 w-12 ml-auto flex items-center justify-center bg-muted text-sm  text-foreground font-semibold">
+              <Avatar className="h-9 w-9 ml-auto flex items-center justify-center bg-muted text-sm  text-foreground font-semibold">
                 
                 <AvatarImage src={userImage} alt={userName} />
                 <AvatarFallback>{initials}</AvatarFallback>

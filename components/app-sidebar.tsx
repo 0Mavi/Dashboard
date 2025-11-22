@@ -52,16 +52,11 @@ const navData = [
     },
      {
         title: "Plano de Estudos",
-        url: "/buy",
+        url: "/Plans",
         icon: Box,
         isActive: false,
     },
-    {
-        title: "Artigos",
-        url: "/Artigos",
-        icon: Users,
-        isActive: false,
-    },
+  
  
 ];
 

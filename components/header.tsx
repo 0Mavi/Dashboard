@@ -18,11 +18,9 @@ export default function Header() {
             <div className="flex items-center gap-2">
                 <h1 className="text-2xl font-bold text-primary">Sync Study</h1>
             </div>
-            <div className="flex items-center gap-x-5">
+            <div className="flex items-center gap-x-3">
                 <ThemeSelector />
-                <Button variant="transparent" size="void">
-                    <Bell color="hsl(var(--primary))" />
-                </Button>
+                
                 <NavUserPhoto />
             </div>
         </div>
