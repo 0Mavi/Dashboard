@@ -209,6 +209,7 @@ export function CreatePlanModal({ onPlanCreated }: CreatePlanModalProps) {
               <Input 
                 id="eventName" 
                 placeholder="Ex: Preparação para Certificação Java"
+                variant="formatRegisterV"
                 value={formData.eventName}
                 onChange={(e) => handleInputChange('eventName', e.target.value)}
               />
@@ -218,6 +219,7 @@ export function CreatePlanModal({ onPlanCreated }: CreatePlanModalProps) {
               <Label htmlFor="objective">Objetivo Principal <span className="text-red-500">*</span></Label>
               <Input 
                 id="objective" 
+                  variant="formatRegisterV"
                 placeholder="Ex: Ser aprovado no exame com nota superior a 80%."
                 value={formData.objective}
                 onChange={(e) => handleInputChange('objective', e.target.value)}
@@ -229,6 +231,7 @@ export function CreatePlanModal({ onPlanCreated }: CreatePlanModalProps) {
               <Textarea
                 id="description"
                 rows={3}
+                
                 placeholder="Descreva o contexto e a motivação para este estudo."
                 value={formData.description}
                 onChange={(e) => handleInputChange('description', e.target.value)}
@@ -240,6 +243,7 @@ export function CreatePlanModal({ onPlanCreated }: CreatePlanModalProps) {
               <Input 
                 id="deadline" 
                 type="date" 
+                  variant="formatRegisterV"
                 value={formData.deadline}
                 onChange={(e) => handleInputChange('deadline', e.target.value)}
               />
@@ -292,7 +296,7 @@ export function CreatePlanModal({ onPlanCreated }: CreatePlanModalProps) {
               />
             </div>
 
-            <div className="space-y-1 border p-3 rounded-lg bg-secondary/20">
+            <div className="space-y-1  p-3 rounded-lg bg-secondary/20">
               <Label className="flex items-center space-x-2 font-semibold" htmlFor='daysPerWeek'>
                 <CalendarDays className="h-4 w-4" />
                 <span>Frequência Semanal (Dias)</span>
@@ -302,12 +306,13 @@ export function CreatePlanModal({ onPlanCreated }: CreatePlanModalProps) {
                 type="number"
                 min={1}
                 max={7}
+                  variant="formatRegisterV"
                 value={formData.daysPerWeek}
                 onChange={(e) => handleInputChange('daysPerWeek', parseInt(e.target.value) || 0)}
               />
             </div>
 
-            <div className="space-y-1 border p-3 rounded-lg bg-secondary/20">
+            <div className="space-y-1 p-3 rounded-lg bg-secondary/20">
               <Label htmlFor="daysOffString" className='flex items-center space-x-2 font-semibold'>
                 <CalendarIcon className='h-4 w-4'/>
                 <span>Datas Indisponíveis (YYYY-MM-DD)</span>

@@ -154,6 +154,12 @@ export default function PlanDisplay() {
                                         <span className="font-medium text-foreground">{events.length}</span> sessões agendadas
                                     </div>
                                 </div>
+
+                                <div>
+                                    <Button variant="outline">
+                                        Ver docs
+                                    </Button>
+                                </div>
                             </div>
                         </CardContent>
                     </Card>
