@@ -42,17 +42,29 @@ interface CalendarEvent {
   original: any;
 }
 
+// Dentro de CalendarPage.tsx
+
 function mapEvents(apiEvents: any[]): CalendarEvent[] {
+  if (!Array.isArray(apiEvents)) return [];
+
   return apiEvents.map((evt, idx) => {
-    const dateStr = evt.start?.dateTime || evt.start?.date || evt.start?.additionalProp1;
+    // Tenta encontrar a data em VÁRIOS lugares possíveis que a IA pode mandar
+    const dateStr = 
+      evt.start?.dateTime || 
+      evt.start?.date || 
+      evt.date || 
+      evt.data_evento || 
+      evt.data ||
+      new Date().toISOString(); // Fallback para hoje se falhar
     
     let type: CalendarEvent['type'] = 'other';
-    if (evt.colorId === "11") type = 'exam'; 
-    if (evt.colorId === "10") type = 'study'; 
+    // Verifica se a IA mandou tags ou colorId
+    if (evt.colorId === "11" || evt.type === 'exam' || evt.tipo === 'prova') type = 'exam'; 
+    if (evt.colorId === "10" || evt.type === 'study' || evt.tipo === 'estudo') type = 'study'; 
 
     return {
       id: evt.id ?? idx,
-      title: evt.summary || "Sem título",
+      title: evt.summary || evt.title || evt.nome_evento || "Sem título",
       date: new Date(dateStr),
       type,
       original: evt

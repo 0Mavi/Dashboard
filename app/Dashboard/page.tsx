@@ -15,15 +15,13 @@ import { Badge } from '@/components/ui/badge';
 import { CreatePlanModal } from '@/components/Chat/CreatePlanModal';
 
 
-
-// --- Interfaces ---
 interface PlanResponse {
   requisicao_usuario: {
     nome_evento: string;
     objetivo_principal: string;
     descricao_evento: string;
     data_evento: string;
-    conhecimentos_esperados: string[]; // <--- VAMOS USAR ISSO AGORA
+    conhecimentos_esperados: string[]; 
     dias_por_semana: number;
   };
 }
@@ -98,13 +96,13 @@ export default function DashboardPage() {
     return "text-blue-500 bg-blue-100";
   };
 
-  // Dados do plano
+ 
   const req = activePlan?.requisicao_usuario;
   const planName = req?.nome_evento || "Sem plano ativo";
   const planDesc = req?.descricao_evento || "";
   const planDeadline = req?.data_evento || "--/--/----";
   const planFreq = req?.dias_por_semana || 0;
-  // Fallback para tópicos caso venha vazio
+
   const planTopics = req?.conhecimentos_esperados && req.conhecimentos_esperados.length > 0 
     ? req.conhecimentos_esperados 
     : ["Nenhum tópico específico listado."];
@@ -129,7 +127,7 @@ export default function DashboardPage() {
 
       <div className="flex flex-1 gap-6 overflow-hidden flex-col lg:flex-row">
         
-        {/* COLUNA ESQUERDA: CARD DO PLANO */}
+
         <Card className="flex-1 flex flex-col border-l-4 border-l-primary shadow-sm bg-card overflow-hidden">
           <CardHeader className="border-b bg-muted/20 pb-4 shrink-0">
             <div className="flex justify-between items-start">
@@ -150,7 +148,7 @@ export default function DashboardPage() {
             </div>
           </CardHeader>
           
-          {/* USAMOS justify-between AQUI PARA DISTRIBUIR O ESPAÇO */}
+  
           <CardContent className="flex-1 p-6 flex flex-col justify-between overflow-y-auto gap-6">
             {activePlan ? (
                 <>
@@ -209,7 +207,7 @@ export default function DashboardPage() {
                     {/* 4. Botão de Ação Inferior */}
                     <div className="pt-2 shrink-0">
                         <Link href="/calendar" className="block w-full"> 
-                            <Button className="w-full py-6 text-base shadow-md hover:shadow-lg transition-all">
+                            <Button variant="home" className="w-full">
                                 <CalendarDays className="mr-2 h-5 w-5"/>
                                 Visualizar Cronograma Completo
                             </Button>
@@ -228,7 +226,7 @@ export default function DashboardPage() {
           </CardContent>
         </Card>
 
-        {/* COLUNA DIREITA (Igual, apenas garantindo o layout) */}
+  
         <Card className="lg:w-[400px] flex flex-col border shadow-sm bg-card h-full overflow-hidden shrink-0">
           <CardHeader className="pb-4 bg-background z-10 border-b shrink-0">
             <CardTitle className="flex items-center space-x-3 text-lg">
