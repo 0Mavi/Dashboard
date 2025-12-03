@@ -45,17 +45,18 @@ const navData = [
         isActive: false,
     },
      {
-        title: "Chat",
-        url: "/Chat",
-        icon: Box,
-        isActive: false,
-    },
-     {
         title: "Plano de Estudos",
         url: "/Plans",
         icon: Box,
         isActive: false,
     },
+     {
+        title: "Chat",
+        url: "/Chat",
+        icon: Box,
+        isActive: false,
+    },
+    
   
  
 ];

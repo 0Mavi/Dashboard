@@ -1,219 +1,135 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Calendar, Target, Clock, ListChecks, ChevronRight, CalendarDays } from 'lucide-react';
-import { format, parseISO } from 'date-fns';
-import { ptBR } from 'date-fns/locale';
-
-// Interface do Plano (Metadados)
-interface PlanResponse {
-    google_id: string;
-    requisicao_usuario?: { 
-        nome_evento: string;
-        objetivo_principal: string;
-        descricao_evento: string;
-        data_evento: string;
-        conhecimentos_esperados: string[];
-        conhecimentos_previos_sobre_objetivo: string[];
-        principais_dificuldades_sobre_objetivo: string[];
-        dias_por_semana: number;
-        dias_sem_estudo: string[];
-    };
-}
-
-// Interface para os Eventos (Agendamentos)
-interface CalendarEvent {
-    summary: string;
-    start: { dateTime?: string; date?: string };
-    end: { dateTime?: string; date?: string };
-    status?: string;
-}
+import { Button } from "@/components/ui/button";
+import { Target, Clock, BookOpen, Trash2, LayoutList } from 'lucide-react';
+import { DocumentGenerator } from '@/components/Chat/DocumentGenerator';
+import { CreatePlanModal } from '@/components/Chat/CreatePlanModal';
 
 export default function PlanDisplay() {
-    const [currentPlan, setCurrentPlan] = useState<PlanResponse | null>(null);
-    const [events, setEvents] = useState<CalendarEvent[]>([]);
+    const [plans, setPlans] = useState<any[]>([]);
 
-    // Função para carregar dados do LocalStorage
-    const loadDataFromStorage = () => {
-        // 1. Carrega o Plano
-        const savedPlan = localStorage.getItem('iag_current_plan');
-        if (savedPlan) {
-            try {
-                setCurrentPlan(JSON.parse(savedPlan));
-            } catch (e) {
-                console.error("Erro ao ler plano:", e);
+    const loadData = () => {
+        try {
+          
+            const historyStr = localStorage.getItem('iag_plans_history');
+            if (historyStr) {
+                setPlans(JSON.parse(historyStr));
+            } else {
+         
+                const currentStr = localStorage.getItem('iag_current_plan');
+                if (currentStr) setPlans([JSON.parse(currentStr)]);
             }
-        }
-
-        // 2. Carrega os Eventos Gerados
-        const savedEvents = localStorage.getItem('iag_calendar_events');
-        if (savedEvents) {
-            try {
-                const parsedEvents = JSON.parse(savedEvents);
-                // Ordena por data
-                const sortedEvents = Array.isArray(parsedEvents) 
-                    ? parsedEvents.sort((a: any, b: any) => {
-                        const dateA = new Date(a.start?.dateTime || a.start?.date || 0).getTime();
-                        const dateB = new Date(b.start?.dateTime || b.start?.date || 0).getTime();
-                        return dateA - dateB;
-                    })
-                    : [];
-                setEvents(sortedEvents);
-            } catch (e) {
-                console.error("Erro ao ler eventos:", e);
-            }
+        } catch (e) {
+            console.error("Erro ao ler planos:", e);
         }
     };
 
     useEffect(() => {
-        loadDataFromStorage();
-        window.addEventListener('plan-updated', loadDataFromStorage);
-        return () => {
-            window.removeEventListener('plan-updated', loadDataFromStorage);
-        };
+        loadData();
+    
+        window.addEventListener('plan-updated', loadData);
+        return () => window.removeEventListener('plan-updated', loadData);
     }, []);
 
-    // Helper para formatar data do evento
-    const formatEventDate = (dateString?: string) => {
-        if (!dateString) return 'Data desconhecida';
-        try {
-            const date = parseISO(dateString);
-            return format(date, "EEEE, dd 'de' MMMM 'às' HH:mm", { locale: ptBR });
-        } catch {
-            return dateString;
-        }
+    const handleDelete = (id: string) => {
+        if(!confirm("Tem certeza que deseja remover este plano do histórico?")) return;
+        
+        const newPlans = plans.filter(p => p.id !== id);
+        setPlans(newPlans);
+        localStorage.setItem('iag_plans_history', JSON.stringify(newPlans));
     };
 
-    if (!currentPlan) {
-        return (
-            <Card className="w-full bg-muted/50 border-dashed border-2">
-                <CardContent className="flex flex-col items-center justify-center py-10 text-muted-foreground text-sm">
-                    <Target className="h-10 w-10 mb-2 opacity-20" />
-                    <p>Nenhum plano de estudos ativo no momento.</p>
-                    <p>Utilize a barra de criação para começar.</p>
-                </CardContent>
-            </Card>
-        );
-    }
-
-    const req = currentPlan.requisicao_usuario;
-    const nome = req?.nome_evento || 'Evento sem título';
-    const objetivo = req?.objetivo_principal || 'Objetivo não especificado';
-    const dataAlvo = req?.data_evento || 'Sem data definida';
-    const descricao = req?.descricao_evento || 'Detalhes não disponíveis.';
-    const diasSemana = req?.dias_por_semana || 0;
-
     return (
-        <div className="w-full mb-6">
-            <Dialog>
-                {/* O Trigger envolve o Card inteiro, tornando-o clicável */}
-                <DialogTrigger asChild>
-                    <Card className="border-l-4 border-l-primary shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer group relative">
-                        {/* Dica visual de que é clicável */}
-                        <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity text-muted-foreground">
-                            <span className="text-xs mr-1">Ver cronograma</span>
-                            <ChevronRight className="inline h-4 w-4" />
-                        </div>
+        <div className="flex flex-col h-full w-full bg-background p-6 overflow-y-auto">
+            <div className="flex justify-between items-center mb-8 shrink-0">
+                <div>
+                    <h1 className="text-3xl font-bold tracking-tight text-primary flex items-center gap-2">
+                        <LayoutList className="h-8 w-8" />
+                        Planos de Estudo
+                    </h1>
+                    <p className="text-muted-foreground mt-1">Gerencie seus cronogramas e gere materiais didáticos.</p>
+                </div>
+                
+           
+                <CreatePlanModal onPlanCreated={() => {}} />
+            </div>
 
-                        <CardHeader className="pb-2">
-                            <div className="flex justify-between items-start">
-                                <div>
-                                    <CardTitle className="text-xl text-primary flex items-center gap-2">
-                                        <Target className="h-5 w-5" />
-                                        {nome}
-                                    </CardTitle>
-                                    <CardDescription className="mt-1 text-base line-clamp-1">
-                                        {objetivo}
-                                    </CardDescription>
-                                </div>
-                                <Badge variant="outline" className="flex items-center gap-1 py-1 group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-                                    <Calendar className="h-3 w-3" />
-                                    Prazo: {dataAlvo}
-                                </Badge>
-                            </div>
-                        </CardHeader>
-                        
-                        <CardContent>
-                            <div className="grid gap-4">
-                                <div className="text-sm text-muted-foreground bg-muted/30 p-3 rounded-md line-clamp-2">
-                                    <span className="font-semibold text-foreground">Descrição: </span> 
-                                    {descricao}
-                                </div>
-                                
-                                <div className="flex items-center gap-4 text-sm">
-                                    <div className="flex items-center gap-1 text-muted-foreground">
-                                        <Clock className="h-4 w-4 text-primary" />
-                                        <span className="font-medium text-foreground">{diasSemana}</span> dias/semana
-                                    </div>
-                                    <div className="flex items-center gap-1 text-muted-foreground">
-                                        <ListChecks className="h-4 w-4 text-primary" />
-                                        <span className="font-medium text-foreground">{events.length}</span> sessões agendadas
-                                    </div>
-                                </div>
+            {plans.length === 0 ? (
+                <div className="flex flex-col items-center justify-center py-20 text-muted-foreground border-2 border-dashed rounded-xl bg-muted/5">
+                    <Target className="h-16 w-16 mb-4 opacity-20" />
+                    <h3 className="text-xl font-semibold">Nenhum plano encontrado</h3>
+                    <p className="max-w-sm text-center mt-2">Utilize o botão "+" acima para criar seu primeiro plano de estudos com Inteligência Artificial.</p>
+                </div>
+            ) : (
+                <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 pb-10">
+                    {plans.map((plan, idx) => {
+                        const req = plan.requisicao_usuario || {};
+                        const topics = req.conhecimentos_esperados || [];
+                  
+                        const planId = plan.id || plan.google_id; 
 
-                                <div>
-                                    <Button variant="outline">
-                                        Ver docs
-                                    </Button>
-                                </div>
-                            </div>
-                        </CardContent>
-                    </Card>
-                </DialogTrigger>
-
-                {/* Conteúdo do Modal (Resumo do Cronograma) */}
-                <DialogContent className="sm:max-w-2xl max-h-[85vh] flex flex-col">
-                    <DialogHeader>
-                        <DialogTitle className="flex items-center gap-2">
-                            <CalendarDays className="h-6 w-6 text-primary"/>
-                            Cronograma Detalhado
-                        </DialogTitle>
-                        <DialogDescription>
-                            Visualização de todas as sessões de estudo geradas para <strong>{nome}</strong>.
-                        </DialogDescription>
-                    </DialogHeader>
-
-                    <div className="flex-1 overflow-hidden mt-4">
-                        {events.length > 0 ? (
-                            <ScrollArea className="h-[50vh] pr-4">
-                                <div className="space-y-4">
-                                    {events.map((evt, index) => (
-                                        <div key={index} className="flex gap-4 border-b pb-3 last:border-0">
-                                            <div className="flex flex-col items-center justify-center min-w-[60px] h-[60px] bg-muted/50 rounded-lg border text-center p-1">
-                                                <span className="text-xs font-bold uppercase text-muted-foreground">
-                                                    {evt.start?.dateTime 
-                                                        ? format(parseISO(evt.start.dateTime), 'MMM', { locale: ptBR }) 
-                                                        : '---'}
-                                                </span>
-                                                <span className="text-xl font-bold text-primary">
-                                                     {evt.start?.dateTime 
-                                                        ? format(parseISO(evt.start.dateTime), 'dd') 
-                                                        : '?'}
-                                                </span>
-                                            </div>
-                                            <div className="flex flex-col justify-center">
-                                                <h4 className="font-semibold text-sm">{evt.summary}</h4>
-                                                <p className="text-xs text-muted-foreground capitalize">
-                                                    {formatEventDate(evt.start?.dateTime || evt.start?.date)}
-                                                </p>
-                                            </div>
+                        return (
+                            <Card key={idx} className="flex flex-col justify-between border-l-4 border-l-primary shadow-sm hover:shadow-md transition-all group">
+                                <CardHeader className="pb-3">
+                                    <div className="flex justify-between items-start gap-2">
+                                        <div className="overflow-hidden">
+                                            <CardTitle className="text-lg font-bold text-foreground truncate" title={req.nome_evento}>
+                                                {req.nome_evento || "Sem título"}
+                                            </CardTitle>
+                                            <CardDescription className="line-clamp-2 mt-1 text-xs">
+                                                {req.objetivo_principal}
+                                            </CardDescription>
                                         </div>
-                                    ))}
-                                </div>
-                            </ScrollArea>
-                        ) : (
-                            <div className="flex flex-col items-center justify-center h-40 text-muted-foreground border-2 border-dashed rounded-xl">
-                                <ListChecks className="h-8 w-8 mb-2 opacity-20" />
-                                <p>Nenhum agendamento encontrado para este plano.</p>
-                            </div>
-                        )}
-                    </div>
-                </DialogContent>
-            </Dialog>
+                                        <Badge variant="outline" className="shrink-0 text-[10px] rounded-full">
+                                            {req.data_evento}
+                                        </Badge>
+                                    </div>
+                                </CardHeader>
+                                
+                                <CardContent className="space-y-4 flex-1">
+                                    <div className="flex items-center gap-4 text-xs text-muted-foreground bg-secondary/20 p-2 rounded-lg">
+                                        <span className="flex items-center gap-1">
+                                            <Clock className="h-3 w-3 text-primary" /> {req.dias_por_semana} dias/sem
+                                        </span>
+                                        <span className="flex items-center gap-1">
+                                            <BookOpen className="h-3 w-3 text-primary" /> {topics.length} Tópicos
+                                        </span>
+                                    </div>
+                                    
+                                    {req.descricao_evento && (
+                                        <p className="text-xs text-muted-foreground line-clamp-3 italic">
+                                            "{req.descricao_evento}"
+                                        </p>
+                                    )}
+
+                                    <div className="flex flex-wrap gap-1 mt-2">
+                                        {topics.slice(0, 3).map((t: string, i: number) => (
+                                            <span key={i} className="text-[10px] px-2 py-0.5 bg-muted rounded text-muted-foreground border truncate max-w-[100px]">
+                                                {t}
+                                            </span>
+                                        ))}
+                                        {topics.length > 3 && <span className="text-[10px] text-muted-foreground px-1">+{topics.length - 3}</span>}
+                                    </div>
+                                </CardContent>
+
+                                <CardFooter className="pt-4 border-t bg-muted/5 flex justify-between items-center gap-2">
+                                   
+
+                            
+                                    <DocumentGenerator 
+                                        planId={planId} 
+                                        topics={topics} 
+                                        className="w-full rounded-full"
+                                    />
+                                </CardFooter>
+                            </Card>
+                        );
+                    })}
+                </div>
+            )}
         </div>
     );
 }
