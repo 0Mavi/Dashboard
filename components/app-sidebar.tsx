@@ -1,19 +1,10 @@
 "use client";
 
 import {
-    
     Bell,
     Box,
-    Calendar,
-    Files,
     Headset,
     LayoutDashboard,
-    MessageCircle,
-    NotepadText,
-    Settings,
-    User,
-    Users,
-    
 } from "lucide-react";
 import type * as React from "react";
 
@@ -27,9 +18,6 @@ import {
     useSidebar,
 } from "@/components/ui/sidebar";
 import Image from "next/image";
-import { NavUser } from "./nav-user";
-import { cn } from "@/lib/utils";
-
 
 const navData = [
     {
@@ -56,23 +44,7 @@ const navData = [
         icon: Box,
         isActive: false,
     },
-    
-  
- 
 ];
-
-// const systemNav = [
-//     {
-//         title: "Configurações",
-//         url: "/Settings",
-//         icon: Settings,
-//     },
-//     {
-//         title: "Meu Perfil",
-//         url: "/Profile",
-//         icon: User,
-//     },
-// ];
 
 const suportNav = [
     {
@@ -87,50 +59,42 @@ const suportNav = [
     }
 ]
 
-
 export default function AppSidebar({
     ...props
 }: React.ComponentProps<typeof Sidebar>) {
 
-    const {open} = useSidebar();
+    const { open } = useSidebar();
     
-
     return (
         <Sidebar collapsible="icon" {...props}>
             <SidebarHeader>
-                <div className="flex items-center justify-center h-12 mt-4">
-                    <Image
-                        src="/assests/logo.png"
-                        alt="Logo"
+                <div className="flex items-center justify-center h-12 mt-2 mb-2">
+                   <Image
+                        src="/assests/Sync.png" 
+                        alt="Logo Sync Study"
                         width={open ? 120 : 40}
                         height={40}
-                        className="object-contain"
+                        className="object-contain block dark:hidden [.purple_&]:hidden [.green_&]:hidden transition-all duration-200"
+                    />
+
+                 
+                    <Image
+                        src="/assests/Sync2.png" 
+                        alt="Logo Sync Study Dark"
+                        width={open ? 120 : 40}
+                        height={40}
+                        className="object-contain hidden dark:block [.purple_&]:block [.green_&]:block transition-all duration-200"
                     />
                 </div>
             </SidebarHeader>
             <SidebarSeparator />
             <SidebarContent>
-                
                 <NavMain items={navData} />
-             
-
-
-                {/* <span className={cn(!open && "hidden") || "text-sm text-muted-foreground p-2" }>Sistema</span>
-
-
-                <NavMain items={systemNav} /> */}
-
             </SidebarContent>
             <SidebarRail />
-
-            
-           
             <div className="flex flex-col gap-2 p-1 mb-2">
-            
                 <NavMain items={suportNav} />
-
             </div>
-            
         </Sidebar>
     );
 }
