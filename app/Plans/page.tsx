@@ -219,7 +219,6 @@ export default function PlanDisplay() {
                                     <DocumentGenerator 
                                         planId={planId} 
                                         googleId={googleId}
-                                        topics={topics}
                                         className="w-full rounded-full"
                                     />
                                 </CardFooter>
