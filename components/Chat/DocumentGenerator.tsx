@@ -8,6 +8,7 @@ import { toast } from "sonner";
 interface DocumentGeneratorProps {
   planId: string;
   googleId: string;
+ 
   topics?: string[];
   activities?: string[];
   className?: string;
@@ -16,21 +17,17 @@ interface DocumentGeneratorProps {
 export function DocumentGenerator({ 
   planId, 
   googleId,
-  topics = [],
-  activities = ["Resumo Teórico", "Exercícios Práticos", "Mapa Mental"],
   className 
 }: DocumentGeneratorProps) {
   
   const { download, loading } = useApi();
 
-  
+
   const generateWordFromJSON = (data: any, filename: string) => {
     try {
-   
       const content = typeof data === 'string' ? JSON.parse(data) : data;
       const items = Array.isArray(content) ? content : [content];
 
-  
       let htmlBody = `
         <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
         <head><meta charset='utf-8'><title>Plano de Estudo</title></head>
@@ -40,7 +37,7 @@ export function DocumentGenerator({
       `;
 
       items.forEach((item: any, index: number) => {
-      
+     
         const obj = item.atividade || item.topico || item;
 
         htmlBody += `
@@ -66,12 +63,10 @@ export function DocumentGenerator({
 
       htmlBody += "</body></html>";
 
-      
       const blob = new Blob(['\ufeff', htmlBody], {
         type: 'application/msword'
       });
 
-    
       const url = window.URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = url;
@@ -95,11 +90,10 @@ export function DocumentGenerator({
       return;
     }
 
+ 
     const payload = {
       google_id: googleId,
-      plano_ensino_id: planId,
-      topicos: topics,
-      atividades: activities
+      plano_ensino_id: planId
     };
 
     try {
@@ -110,7 +104,7 @@ export function DocumentGenerator({
       if (response.ok && response.data) {
         const blob = response.data;
         
-      
+    
         if (blob.type === 'application/json' || blob.type.includes('json')) {
             const text = await blob.text();
             console.log("Recebi JSON do servidor, convertendo para DOC...", text);
@@ -132,6 +126,7 @@ export function DocumentGenerator({
         toast.success("Download concluído!");
 
       } else {
+     
         let msg = "Erro desconhecido.";
         if (response.data instanceof Blob) {
              msg = await response.data.text();
@@ -139,6 +134,12 @@ export function DocumentGenerator({
              msg = response.data.message;
         }
         console.error("Erro API:", response);
+    
+        try {
+            const parsed = JSON.parse(msg);
+            msg = parsed.detail || parsed.message || msg;
+        } catch {}
+        
         toast.error(`Falha: ${msg.slice(0, 100)}`);
       }
     } catch (error) {
