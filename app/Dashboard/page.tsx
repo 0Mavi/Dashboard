@@ -6,7 +6,7 @@ import { Calendar, Target, AlertCircle, CheckCircle2, ChevronRight, CalendarDays
 import { format, parseISO, isToday, isTomorrow, addHours } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -263,13 +263,16 @@ export default function DashboardPage() {
               </div>
             </div>
 
+            
+          </CardContent>
+          <CardFooter className='flex justify-end border-t '>
             <Link href="/calendar">
-              <Button variant="home" className="w-full h-10 text-sm">
+              <Button variant="home" className="w-full h-10 text-sm mt-4">
                 <CalendarDays className="mr-2 h-4 w-4"/>
                 Visualizar Cronograma Completo
               </Button>
             </Link>
-          </CardContent>
+          </CardFooter>
         </Card>
 
         {/* ===== AGENDA ===== */}
