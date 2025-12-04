@@ -23,31 +23,29 @@ import { apiPost } from "@/lib/api";
 interface DocumentGeneratorProps {
   planId: string;
   googleId: string;
-  planName?: string; // <--- NOVO CAMPO: Nome do plano para o arquivo
+  planName?: string;
   className?: string;
 }
 
 export function DocumentGenerator({ 
   planId, 
   googleId,
-  planName = "plano", // Valor padrão
+  planName = "plano", 
   className 
 }: DocumentGeneratorProps) {
   
   const { download, loading } = useApi();
   const [isGenerating, setIsGenerating] = useState(false);
 
-  // Helper para limpar o nome do arquivo (remove acentos e espaços)
   const sanitizeFilename = (name: string, suffix: string) => {
     const cleanName = name
       .toLowerCase()
-      .normalize("NFD").replace(/[\u0300-\u036f]/g, "") // Remove acentos
-      .replace(/[^a-z0-9]/g, "_"); // Troca espaços/símbolos por _
+      .normalize("NFD").replace(/[\u0300-\u036f]/g, "") 
+      .replace(/[^a-z0-9]/g, "_"); 
     
     return `${cleanName}-${suffix}.doc`;
   };
 
-  // ... (função normalizeData mantida igual) ...
   const normalizeData = (item: any) => {
       if (!item) return null;
       if (Array.isArray(item)) return normalizeData(item[0]);
@@ -56,7 +54,6 @@ export function DocumentGenerator({
       return item;
   };
 
-  // ... (função generateWordFromJSON mantida igual) ...
   const generateWordFromJSON = (data: any, title: string, filename: string) => {
     try {
       const items = Array.isArray(data) ? data : [data];
@@ -69,7 +66,7 @@ export function DocumentGenerator({
         <h2 style="color: #555;">${planName}</h2> <hr/>
       `;
 
-      // ... (Loop de itens mantido igual) ...
+
       items.forEach((rawItem: any, index: number) => {
         const obj = normalizeData(rawItem);
         if (!obj) return;
@@ -108,7 +105,7 @@ export function DocumentGenerator({
       const url = window.URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = url;
-      // USA O NOME LIMPO AQUI
+ 
       link.setAttribute('download', filename);
       document.body.appendChild(link);
       link.click();
@@ -156,7 +153,7 @@ export function DocumentGenerator({
           return;
       }
 
-      // GERA COM O NOME PERSONALIZADO
+ 
       const fileName = sanitizeFilename(planName, "atividades");
       generateWordFromJSON(activitiesData, `Atividades - ${planName}`, fileName);
 
@@ -196,7 +193,7 @@ export function DocumentGenerator({
           topicsData = topicIds;
       }
 
-      // GERA COM O NOME PERSONALIZADO
+
       const fileName = sanitizeFilename(planName, "topicos");
       generateWordFromJSON(topicsData, `Tópicos - ${planName}`, fileName);
 
@@ -224,7 +221,7 @@ export function DocumentGenerator({
         
         if (blob.type === 'application/json' || blob.type.includes('json')) {
             const text = await blob.text();
-            // Fallback para JSON
+    
             const fileName = sanitizeFilename(planName, "completo");
             generateWordFromJSON(text, `Plano - ${planName}`, fileName);
             return; 
@@ -234,7 +231,7 @@ export function DocumentGenerator({
         const link = document.createElement('a');
         link.href = url;
         
-        // Define nome amigável também para o download direto do backend
+       
         const fileName = sanitizeFilename(planName, "completo");
         link.setAttribute('download', fileName);
         
