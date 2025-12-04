@@ -12,12 +12,12 @@ export default function LoginPage() {
 
   const handleGoogleSignIn = () => {
     setLoading(true);
-    window.location.href = GOOGLE_AUTH_URL; // 👈 usa a URL que o back mandou
+    window.location.href = GOOGLE_AUTH_URL; 
   };
 
   return (
     <div className="relative flex min-h-screen items-center justify-center bg-background px-6 overflow-hidden">
-      {/* ... resto do layout igual ... */}
+ 
 
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -26,10 +26,11 @@ export default function LoginPage() {
         className="relative z-10 w-full max-w-sm p-6 rounded-2xl shadow-xl border border-border bg-card"
       >
         <div className="text-center mt-6">
+          
           <h2 className="text-2xl font-semibold text-foreground">
-            Bem-vindo(a)
+            Bem-vindo(a) ao <br /> <span className="mt-2 text-[30px]">Sync Study</span>
           </h2>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-muted-foreground mt-4">
             Faça login para continuar
           </p>
         </div>
@@ -39,7 +40,7 @@ export default function LoginPage() {
           disabled={loading}
           whileHover={{ scale: loading ? 1 : 1.02 }}
           whileTap={{ scale: loading ? 1 : 0.97 }}
-          className="w-full mt-8 flex items-center justify-center gap-3 bg-purpleMain
+          className="w-full mt-3 flex items-center justify-center gap-3 bg-purpleMain
             text-foreground font-medium py-3 rounded-xl transition-all
             hover:bg-purple-hover disabled:opacity-70 disabled:cursor-not-allowed"
         >
