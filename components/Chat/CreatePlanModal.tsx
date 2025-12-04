@@ -179,7 +179,7 @@ export function CreatePlanModal({ onPlanCreated }: CreatePlanModalProps) {
         setIsOpen(false);
       } else {
         const msg = response.data?.message || JSON.stringify(response.data) || "Erro interno do servidor (500)";
-        console.error("❌ Erro API Detalhado:", response);
+       
         toast.error(`Falha ao criar plano: ${msg}`);
       }
     } catch (error) {

@@ -45,7 +45,6 @@ export function NavUserPhoto() {
   const userName: string = user?.name ?? "Usuário";
   const userImage: string | undefined = user?.image;
 
-
   const initials = userName
     .split(" ")
     .filter(Boolean)
@@ -55,25 +54,16 @@ export function NavUserPhoto() {
 
   const handleLogout = () => {
     setIsLoading(true);
-
     try {
       localStorage.removeItem("access_token");
       localStorage.removeItem("refresh_token");
       localStorage.removeItem("id_token");
       localStorage.removeItem("user");
-
-      toast("Logout bem-sucedido!", {
-        duration: 2000,
-      });
-
+      toast("Logout bem-sucedido!", { duration: 2000 });
       router.push("/Login");
     } catch (err: any) {
       console.error(err);
-
-      toast("Erro ao desconectar!", {
-        description: err.message,
-        duration: 3000,
-      });
+      toast("Erro ao desconectar!", { description: err.message, duration: 3000 });
     } finally {
       setIsLoading(false);
     }
@@ -98,38 +88,37 @@ export function NavUserPhoto() {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button
-              variant="void"
-              className="flex items-center gap-2 w-full p-2 h-auto justify-between"
+              variant="ghost2" 
+              className="flex items-center gap-2 w-full p-2 h-auto justify-between group hover:bg-sidebar-accent"
             >
-              <span className="text-[16px] font-semibold text-sidebar-foreground leading-tight truncate">
+            
+              <span className="text-[16px] font-semibold  group-hover:text-sidebar-accent-foreground leading-tight truncate">
                 {userName}
               </span>
 
-              <Avatar className="h-9 w-9 ml-auto flex items-center justify-center bg-muted text-sm  text-foreground font-semibold">
-                
+              <Avatar className="h-9 w-9 ml-auto flex items-center justify-center bg-muted text-foreground font-semibold border border-sidebar-border">
                 <AvatarImage src={userImage} alt={userName} />
                 <AvatarFallback>{initials}</AvatarFallback>
-            
               </Avatar>
             </Button>
           </DropdownMenuTrigger>
 
           <DropdownMenuContent
-            className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-[8px] bg-background text-foreground shadow-md border-secondary border-2"
+            className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-[8px] bg-popover text-popover-foreground shadow-md border-border border"
             side="bottom"
             align="end"
             sideOffset={4}
           >
             <DropdownMenuGroup>
               <DropdownMenuItem
-                className="flex items-center gap-2 px-4 py-2 hover:bg-popover hover:text-white cursor-pointer"
+                className="flex items-center gap-2 px-4 py-2 cursor-pointer focus:bg-accent focus:text-accent-foreground"
                 onClick={handleRedirectProfile}
               >
                 <BadgeCheck size={18} />
                 <span className="text-sm">Minha conta</span>
               </DropdownMenuItem>
               <DropdownMenuItem
-                className="flex items-center gap-2 px-4 py-2 hover:bg-popover hover:text-white cursor-pointer"
+                className="flex items-center gap-2 px-4 py-2 cursor-pointer focus:bg-accent focus:text-accent-foreground"
                 onClick={handleRedirectSetting}
               >
                 <Settings size={18} />
@@ -137,10 +126,10 @@ export function NavUserPhoto() {
               </DropdownMenuItem>
             </DropdownMenuGroup>
 
-            <DropdownMenuSeparator className="bg-popover" />
+            <DropdownMenuSeparator />
 
             <DropdownMenuItem
-              className="flex items-center gap-2 px-4 py-2 hover:bg-popover hover:text-white cursor-pointer"
+              className="flex items-center gap-2 px-4 py-2 cursor-pointer focus:bg-destructive focus:text-destructive-foreground"
               onClick={handleLogout}
               disabled={isLoading}
             >

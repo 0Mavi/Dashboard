@@ -30,6 +30,8 @@ const buttonVariants = cva(
         defaultV:"bg-primary text-muted shadow items-center border-2 border-primary gap-x-1 hover:bg-transparent hover:text-primary",
         home:
           "flex w-full bg-primary text-muted shadow items-center border-2 border-primary gap-x-1 hover:bg-transparent hover:text-primary rounded-full",
+        ghost2:
+          "text-foreground hover:border-primary hover:border-secondary hover:text-secondary hover:bg-transparent",
       },
       size: {
         default: "h-9 px-4 py-2 rounded-xl",
